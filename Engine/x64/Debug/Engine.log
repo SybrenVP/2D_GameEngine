@@ -1,0 +1,42 @@
+﻿  pch.cpp
+  Audio.cpp
+  AudioLocator.cpp
+  CharacterControllerComponent.cpp
+  Engine.cpp
+  Font.cpp
+  FPSComponent.cpp
+  FPSScene.cpp
+  GameObject.cpp
+  GameTime.cpp
+  GraphMovementComponent.cpp
+  GridComponent.cpp
+  GridObserver.cpp
+  InputCommands.cpp
+  InputComponent.cpp
+  InputManager.cpp
+  Logger.cpp
+  main.cpp
+  Renderer.cpp
+  ResourceManager.cpp
+  Scene.cpp
+  Generating Code...
+  Compiling...
+  SceneManager.cpp
+  Subject.cpp
+  TextComponent.cpp
+  Texture2D.cpp
+  TextureComponent.cpp
+  Generating Code...
+  Engine.vcxproj -> E:\Programming 4\2D_GameEngine\x64\Debug\Engine.lib
+  E:\Programming 4\2D_GameEngine\lib\SDL2\lib\x64\SDL2.dll
+  1 File(s) copied
+  E:\Programming 4\2D_GameEngine\lib\SDL2_image\lib\x64\libjpeg-9.dll
+  E:\Programming 4\2D_GameEngine\lib\SDL2_image\lib\x64\libpng16-16.dll
+  E:\Programming 4\2D_GameEngine\lib\SDL2_image\lib\x64\libtiff-5.dll
+  E:\Programming 4\2D_GameEngine\lib\SDL2_image\lib\x64\libwebp-7.dll
+  E:\Programming 4\2D_GameEngine\lib\SDL2_image\lib\x64\SDL2_image.dll
+  E:\Programming 4\2D_GameEngine\lib\SDL2_image\lib\x64\zlib1.dll
+  6 File(s) copied
+  E:\Programming 4\2D_GameEngine\lib\SDL2_ttf\lib\x64\libfreetype-6.dll
+  E:\Programming 4\2D_GameEngine\lib\SDL2_ttf\lib\x64\SDL2_ttf.dll
+  2 File(s) copied

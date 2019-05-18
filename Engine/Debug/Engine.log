@@ -1,0 +1,30 @@
+﻿  pch.cpp
+  Audio.cpp
+  AudioLocator.cpp
+  CharacterControllerComponent.cpp
+  Engine.cpp
+  Font.cpp
+  FPSComponent.cpp
+  FPSScene.cpp
+  GameObject.cpp
+  GameTime.cpp
+  GraphMovementComponent.cpp
+  GridComponent.cpp
+  GridObserver.cpp
+  InputCommands.cpp
+  InputComponent.cpp
+  InputManager.cpp
+  Logger.cpp
+  main.cpp
+  Renderer.cpp
+  ResourceManager.cpp
+  Scene.cpp
+  Generating Code...
+  Compiling...
+  SceneManager.cpp
+  Subject.cpp
+  TextComponent.cpp
+  Texture2D.cpp
+  TextureComponent.cpp
+  Generating Code...
+  Engine.vcxproj -> E:\Programming 4\2D_GameEngine\Debug\Engine.lib
