@@ -54,6 +54,11 @@ void svp::GameObject::SetPosition(float x, float y)
 	m_Transform.SetPosition(x, y, 0.0f);
 }
 
+void svp::GameObject::Translate(float x, float y)
+{
+	m_Transform.SetPosition(m_Transform.GetPosition().x + x, m_Transform.GetPosition().y + y, m_Transform.GetPosition().z);
+}
+
 svp::GameObject::~GameObject()
 {
 	for (size_t i{}; i < m_pComponents.size(); i++)

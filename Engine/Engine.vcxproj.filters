@@ -21,9 +21,6 @@
     <Filter Include="Source Files\Components">
       <UniqueIdentifier>{fdb7c7a9-1f95-4ec9-8076-2958d27e2a96}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Scenes">
-      <UniqueIdentifier>{3a47d7e8-8b73-4e18-90ed-898b79e7e036}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Helpers\Observer">
       <UniqueIdentifier>{286b9b87-31c3-43aa-b03c-e53e50b3eee1}</UniqueIdentifier>
     </Filter>
@@ -64,9 +61,6 @@
     </ClInclude>
     <ClInclude Include="TextureComponent.h">
       <Filter>Source Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="FPSScene.h">
-      <Filter>Source Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Source Files\Helpers</Filter>
@@ -165,9 +159,6 @@
     </ClCompile>
     <ClCompile Include="TextureComponent.cpp">
       <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="FPSScene.cpp">
-      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files\Helpers</Filter>

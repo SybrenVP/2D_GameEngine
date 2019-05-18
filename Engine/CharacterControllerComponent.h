@@ -17,7 +17,7 @@ namespace svp
 		virtual void FixedUpdate() override { return; }
 
 		void SetButton(SDL_GameControllerButton button, InputCommands* pCommand);
-		void SetAxis(SDL_GameControllerAxis button, InputCommands* pCommand);
+		void SetButton(SDL_Scancode, InputCommands* pCommand);
 	private:
 		InputComponent* m_pInputComp;
 	};

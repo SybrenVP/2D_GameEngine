@@ -27,7 +27,7 @@ void svp::CharacterControllerComponent::SetButton(SDL_GameControllerButton butto
 	m_pInputComp->SetButton(button, pCommand);
 }
 
-void svp::CharacterControllerComponent::SetAxis(SDL_GameControllerAxis axis, InputCommands* pCommand)
+void svp::CharacterControllerComponent::SetButton(SDL_Scancode key, InputCommands* pCommand)
 {
-	m_pInputComp->SetAxis(axis, pCommand);
+	m_pInputComp->SetButton(key, pCommand);
 }

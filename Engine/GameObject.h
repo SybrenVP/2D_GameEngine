@@ -21,6 +21,7 @@ namespace svp
 
 		void AddComponent(BaseComponent* pComponent);
 		void SetPosition(float x, float y);
+		void Translate(float x, float y);
 		
 		Transform GetTransform() { return m_Transform; }
 

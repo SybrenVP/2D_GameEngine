@@ -42,10 +42,14 @@ void svp::FPSScene::Initialize()
 	charContComp->SetButton(SDL_GameControllerButton::SDL_CONTROLLER_BUTTON_DPAD_DOWN, new GridMoveDownCommand());
 	charContComp->SetButton(SDL_GameControllerButton::SDL_CONTROLLER_BUTTON_DPAD_RIGHT, new GridMoveRightCommand());
 	charContComp->SetButton(SDL_GameControllerButton::SDL_CONTROLLER_BUTTON_DPAD_UP, new GridMoveUpCommand());
+	charContComp->SetButton(SDL_SCANCODE_A, new GridMoveLeftCommand());
+	charContComp->SetButton(SDL_SCANCODE_S, new GridMoveDownCommand());
+	charContComp->SetButton(SDL_SCANCODE_D, new GridMoveRightCommand());
+	charContComp->SetButton(SDL_SCANCODE_W, new GridMoveUpCommand());
 	pPlayer->AddComponent(charContComp);
 
 	//Make a graph movement component, add it to the player
-	auto pGraph = new GraphMovementComponent(pPlayer, pGrid->GetComponent<GridComponent>());
+	auto pGraph = new GraphMovementComponent(pPlayer, pGrid->GetComponent<GridComponent>(), 1);
 	pPlayer->AddComponent(pGraph);
 
 	//Make a texture (needs to be a sprite comp), add it to the player

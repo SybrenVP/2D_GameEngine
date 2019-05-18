@@ -5,7 +5,7 @@
 #include <SDL.h>
 #include "GameTime.h"
 
-svp::GraphMovementComponent::GraphMovementComponent(GameObject* const pGameObject, GridComponent* const pGrid)
+svp::GraphMovementComponent::GraphMovementComponent(GameObject* const pGameObject, GridComponent* const pGrid, const int cornerCut)
 	: BaseComponent(pGameObject)
 	, m_pGrid{nullptr}
 	, m_Space{pGrid->GetSpace()}
@@ -13,6 +13,7 @@ svp::GraphMovementComponent::GraphMovementComponent(GameObject* const pGameObjec
 	, m_Height{pGrid->GetHeight()}
 	, m_IsUsingGrid{true}
 	, m_Dir{Direction::NONE}
+	, m_CornerCutoff{ cornerCut }
 {
 	m_pGrid = pGrid;
 	m_pPoints = m_pGrid->GetPoints();
@@ -94,97 +95,121 @@ void svp::GraphMovementComponent::SetDirection(Direction dir)
 
 void svp::GraphMovementComponent::MoveUp()
 {	
-	float gameObjX = m_pGameObject->GetTransform().GetPosition().x;
-	float gameObjY = m_pGameObject->GetTransform().GetPosition().y;
+	float yDisplacement{};
+	float xDisplacement{};
+	float speed{ 50.f };
+	float deltaTime{float(GameTime::GetInstance().GetDeltaTime())};
 
-	if (m_DistToClosestX <= 2)
+	if (m_DistToClosestX <= m_CornerCutoff)
 	{
-		m_PreviousDir = Direction::UP;
+		if (m_PreviousDir == Direction::LEFT)
+			xDisplacement -= m_DistToClosestX;
+		else if (m_PreviousDir == Direction::RIGHT)
+			xDisplacement += m_DistToClosestX;
 
-		gameObjY--;
-		gameObjX = float(m_ClosestX);
+		m_PreviousDir = Direction::UP;
+		
+		yDisplacement = -speed * deltaTime;
 	}
 	else if(m_PreviousDir == Direction::LEFT)
 	{
-		gameObjX--;
+		xDisplacement = -speed * deltaTime;
 	}
 	else if (m_PreviousDir == Direction::RIGHT)
 	{
-		gameObjX++;
+		xDisplacement = speed * deltaTime;
 	}
 
-	m_pGameObject->SetPosition(gameObjX, gameObjY);
+	m_pGameObject->Translate(xDisplacement, yDisplacement);
 }
 
 void svp::GraphMovementComponent::MoveDown()
 {
-	float gameObjX = m_pGameObject->GetTransform().GetPosition().x;
-	float gameObjY = m_pGameObject->GetTransform().GetPosition().y;
+	float yDisplacement{};
+	float xDisplacement{};
+	float speed{ 50.f };
+	float deltaTime{ float(GameTime::GetInstance().GetDeltaTime()) };
 
-	if (m_DistToClosestX <= 2)
+	if (m_DistToClosestX <= m_CornerCutoff)
 	{
+		if (m_PreviousDir == Direction::LEFT)
+			xDisplacement -= m_DistToClosestX;
+		else if (m_PreviousDir == Direction::RIGHT)
+			xDisplacement += m_DistToClosestX;
+
 		m_PreviousDir = Direction::DOWN;
-		
-		gameObjY++;
-		gameObjX = float(m_ClosestX);
+
+		yDisplacement = speed * deltaTime;
 	}
 	else if (m_PreviousDir == Direction::LEFT)
 	{
-		gameObjX--;
+		xDisplacement = -speed * deltaTime;
 	}
 	else if (m_PreviousDir == Direction::RIGHT)
 	{
-		gameObjX++;
+		xDisplacement = speed * deltaTime;
 	}
 
-	m_pGameObject->SetPosition(gameObjX, gameObjY);
+	m_pGameObject->Translate(xDisplacement, yDisplacement);
 }
 
 void svp::GraphMovementComponent::MoveLeft()
 {
-	float gameObjX = m_pGameObject->GetTransform().GetPosition().x;
-	float gameObjY = m_pGameObject->GetTransform().GetPosition().y;
+	float yDisplacement{};
+	float xDisplacement{};
+	float speed{ 50.f };
+	float deltaTime{ float(GameTime::GetInstance().GetDeltaTime()) };
 
-	if (m_DistToClosestY <= 2)
+	if (m_DistToClosestY <= m_CornerCutoff)
 	{
+		if (m_PreviousDir == Direction::UP)
+			yDisplacement -= m_DistToClosestY;
+		else if (m_PreviousDir == Direction::DOWN)
+			yDisplacement += m_DistToClosestY;
+
 		m_PreviousDir = Direction::LEFT;
 
-		gameObjX--;
-		gameObjY = float(m_ClosestY);
+		xDisplacement = -speed * deltaTime;
 	}
 	else if (m_PreviousDir == Direction::UP)
 	{
-		gameObjY--;
+		yDisplacement = -speed * deltaTime;
 	}
 	else if (m_PreviousDir == Direction::DOWN)
 	{
-		gameObjY++;
+		yDisplacement = speed * deltaTime;
 	}
 
-	m_pGameObject->SetPosition(gameObjX, gameObjY);
+	m_pGameObject->Translate(xDisplacement, yDisplacement);
 }
 
 void svp::GraphMovementComponent::MoveRight()
 {
-	float gameObjX = m_pGameObject->GetTransform().GetPosition().x;
-	float gameObjY = m_pGameObject->GetTransform().GetPosition().y;
+	float yDisplacement{};
+	float xDisplacement{};
+	float speed{ 50.f };
+	float deltaTime{ float(GameTime::GetInstance().GetDeltaTime()) };
 
-	if (m_DistToClosestY <= 2)
+	if (m_DistToClosestY <= m_CornerCutoff)
 	{
+		if (m_PreviousDir == Direction::UP)
+			yDisplacement -= m_DistToClosestY;
+		else if (m_PreviousDir == Direction::DOWN)
+			yDisplacement += m_DistToClosestY;
+		
 		m_PreviousDir = Direction::RIGHT;
 
-		gameObjX++;
-		gameObjY = float(m_ClosestY);
+		xDisplacement = speed * deltaTime;
 	}
 	else if (m_PreviousDir == Direction::UP)
 	{
-		gameObjY--;
+		yDisplacement = -speed * deltaTime;
 	}
 	else if (m_PreviousDir == Direction::DOWN)
 	{
-		gameObjY++;
+		yDisplacement = speed * deltaTime;
 	}
 
-	m_pGameObject->SetPosition(gameObjX, gameObjY);
+	m_pGameObject->Translate(xDisplacement, yDisplacement);
 }
 

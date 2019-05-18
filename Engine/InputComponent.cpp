@@ -4,8 +4,7 @@
 
 svp::InputComponent::InputComponent(GameObject* const pGameObject)
 	: BaseComponent(pGameObject)
-	, m_pBoundButtons{}
-	, m_pBoundAxis{}
+	, m_pBoundCButtons{}
 {
 	InputManager::GetInstance().AddPlayer(this);
 }
@@ -13,71 +12,52 @@ svp::InputComponent::InputComponent(GameObject* const pGameObject)
 
 svp::InputComponent::~InputComponent()
 {
-	size_t size{ m_pBoundButtons.size() };
+	size_t size{ m_pBoundCButtons.size() };
 	for (size_t i{}; i < size; i++)
 	{
-		delete m_pBoundButtons.at(m_pBoundButtons.size() - 1)->m_pCommand;
-		delete m_pBoundButtons.at(m_pBoundButtons.size() - 1);
-		m_pBoundButtons.pop_back();
-	}
-	
-	size_t sizeAxis{ m_pBoundAxis.size() };
-	for (size_t i{}; i < sizeAxis; i++)
-	{
-		delete m_pBoundAxis.at(m_pBoundAxis.size() - 1)->second;
-		delete m_pBoundAxis.at(m_pBoundAxis.size() - 1);
-		m_pBoundAxis.pop_back();
+		delete m_pBoundCButtons.at(m_pBoundCButtons.size() - 1)->m_pCommand;
+		delete m_pBoundCButtons.at(m_pBoundCButtons.size() - 1);
+		m_pBoundCButtons.pop_back();
 	}
 }
 
 void svp::InputComponent::SetButton(SDL_GameControllerButton button, InputCommands* pCommand)
 {
-	for (size_t i{}; i < m_pBoundButtons.size(); i++)
+	for (size_t i{}; i < m_pBoundCButtons.size(); i++)
 	{
-		if (m_pBoundButtons.at(i)->m_Button == button && m_pBoundButtons.at(i)->m_pCommand == pCommand)
+		if (m_pBoundCButtons.at(i)->m_Button == button && m_pBoundCButtons.at(i)->m_pCommand == pCommand)
 		{
 			Logger::GetInstance().Log(Logger::LogType::Warning, "This button and command are already in the list; In 'InputComponent::SetButton()'");
 			return;
 		}
-		if (m_pBoundButtons.at(i)->m_Button == button)
+		if (m_pBoundCButtons.at(i)->m_Button == button)
 		{
 			Logger::GetInstance().Log(Logger::LogType::Warning, "This button is already in use for another command; In 'InputComponent::SetButton()'.");
 		}
-		if (m_pBoundButtons.at(i)->m_pCommand == pCommand)
-		{
-			Logger::GetInstance().Log(Logger::LogType::Error, "This command is assigned to another button; In 'InputComponent::SetButton()'.");
-			return;
-		}
 	}
-	m_pBoundButtons.push_back(new Button(button, pCommand, true));
+	m_pBoundCButtons.push_back(new CButton(button, pCommand, true));
 }
 
-void svp::InputComponent::SetAxis(SDL_GameControllerAxis axis, InputCommands * pCommand)
+void svp::InputComponent::SetButton(SDL_Scancode key, InputCommands* pCommand)
 {
-	for (auto boundAxis : m_pBoundAxis)
+	for (size_t i{}; i < m_pBoundKButtons.size(); i++)
 	{
-		if (boundAxis->first == axis && boundAxis->second == pCommand)
+		if (m_pBoundKButtons.at(i)->m_Button == key && m_pBoundCButtons.at(i)->m_pCommand == pCommand)
 		{
-			Logger::GetInstance().Log(Logger::LogType::Warning, "This axis and command are already in the list; In 'InputComponent::SetAxis()'");
+			Logger::GetInstance().Log(Logger::LogType::Warning, "This button and command are already in the list; In 'InputComponent::SetButton()'");
 			return;
 		}
-		if (boundAxis->first == axis)
+		if (m_pBoundKButtons.at(i)->m_Button == key)
 		{
-			Logger::GetInstance().Log(Logger::LogType::Warning, "This axis is already in use for another command; In 'InputComponent::SetAxis()'.");
-		}
-		if (boundAxis->second == pCommand)
-		{
-			Logger::GetInstance().Log(Logger::LogType::Error, "This command is assigned to another axis; In 'InputComponent::SetAxis()'.");
-			return;
+			Logger::GetInstance().Log(Logger::LogType::Warning, "This button is already in use for another command; In 'InputComponent::SetButton()'.");
 		}
 	}
-	
-	m_pBoundAxis.push_back(new std::pair<SDL_GameControllerAxis, InputCommands*>( axis, pCommand ));
+	m_pBoundKButtons.push_back(new KButton(key, pCommand, true));
 }
 
 void svp::InputComponent::ProcessCommands(SDL_GameControllerButton cButton, bool isUp)
 {
-	for (auto button : m_pBoundButtons)
+	for (auto button : m_pBoundCButtons)
 	{
 		if (button->m_Button == cButton)
 		{
@@ -91,21 +71,24 @@ void svp::InputComponent::ProcessCommands(SDL_GameControllerButton cButton, bool
 
 }
 
-void svp::InputComponent::ProcessCommands(SDL_GameControllerAxis cAxis, const int value)
+void svp::InputComponent::ProcessCommands(SDL_Scancode kButton, bool isUp)
 {
-	for (auto axis : m_pBoundAxis)
+	for (auto button : m_pBoundKButtons)
 	{
-		if (axis->first == cAxis)
+		if (button->m_Button == kButton)
 		{
-			axis->second->Execute(m_pGameObject, value);
-			return;
+			button->bIsUp = isUp;
+			if (!isUp)
+				button->m_pCommand->Execute(m_pGameObject);
+
+			break;
 		}
 	}
 }
 
 void svp::InputComponent::Update()
 {
-	for (auto button : m_pBoundButtons)
+	for (auto button : m_pBoundCButtons)
 	{
 		if (!button->bIsUp)
 			button->m_pCommand->Execute(m_pGameObject);

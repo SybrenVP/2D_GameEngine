@@ -50,13 +50,6 @@ bool svp::InputManager::IsNotQuitting()
 	{
 		if (e.type == SDL_QUIT)
 			return false;
-		else if (e.type == SDL_CONTROLLERAXISMOTION)
-		{
-			if (e.caxis.value < -m_JoystickDeadzone || e.caxis.value > m_JoystickDeadzone) //check if out of deadzone
-			{
-				ProcessCAxis(e.caxis, e.caxis.which, e.caxis.value / abs(e.caxis.value));
-			}				
-		}
 		else if (e.type == SDL_CONTROLLERBUTTONUP)
 		{
 			ProcessCButtonUp(e.cbutton, e.caxis.which);
@@ -64,6 +57,14 @@ bool svp::InputManager::IsNotQuitting()
 		else if (e.type == SDL_CONTROLLERBUTTONDOWN)
 		{
 			ProcessCButtonDown(e.cbutton, e.caxis.which);
+		}
+		else if (e.type == SDL_KEYUP)
+		{
+			ProcessKButtonUp(e.key, 0);
+		}
+		else if (e.type == SDL_KEYDOWN)
+		{
+			ProcessKButtonDown(e.key, 0);
 		}
 	}
 	
@@ -102,13 +103,24 @@ void svp::InputManager::ProcessCButtonDown(const SDL_ControllerButtonEvent cButt
 	m_pPlayers.at(playerID)->ProcessCommands(SDL_GameControllerButton(cButton.button), false);
 }
 
-void svp::InputManager::ProcessCAxis(const SDL_ControllerAxisEvent cAxis, const int playerID, const int value)
+void svp::InputManager::ProcessKButtonUp(const SDL_KeyboardEvent kButton, const int playerID)
 {
 	if (playerID > int(m_pPlayers.size()) - 1)
 	{
-		Logger::GetInstance().Log(Logger::LogType::Error, "playerID larger than amount of players; In 'InputManager::ProcessCAxis()'.");
+		Logger::GetInstance().Log(Logger::LogType::Error, "playerID larger than amount of players; In 'InputManager::ProcessKButtonUP()'.");
 		return;
 	}
 
-	m_pPlayers.at(playerID)->ProcessCommands(SDL_GameControllerAxis(cAxis.axis), value);
+	m_pPlayers.at(playerID)->ProcessCommands(kButton.keysym.scancode, true);
+}
+
+void svp::InputManager::ProcessKButtonDown(const SDL_KeyboardEvent kButton, const int playerID)
+{
+	if (playerID > int(m_pPlayers.size()) - 1)
+	{
+		Logger::GetInstance().Log(Logger::LogType::Error, "playerID larger than amount of players; In 'InputManager::ProcessKButtonDown()'.");
+		return;
+	}
+
+	m_pPlayers.at(playerID)->ProcessCommands(kButton.keysym.scancode, false);
 }

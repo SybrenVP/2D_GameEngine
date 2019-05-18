@@ -16,7 +16,7 @@ namespace svp
 	class GraphMovementComponent final : public BaseComponent
 	{
 	public:
-		GraphMovementComponent(GameObject* const pGameObject, GridComponent* const grid);
+		GraphMovementComponent(GameObject* const pGameObject, GridComponent* const grid, const int cornerCut = 0);
 		~GraphMovementComponent();
 
 		virtual void Update() override;
@@ -41,6 +41,7 @@ namespace svp
 		const int m_Width;
 		const int m_Height;
 		const int m_Space;
+		const int m_CornerCutoff;
 
 		int m_DistToClosestX;
 		int m_DistToClosestY;
