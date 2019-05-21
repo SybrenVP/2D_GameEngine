@@ -173,3 +173,12 @@ Engine/x64/Debug/Engine.idb
 Engine/x64/Debug/CharacterControllerComponent.obj
 Engine/x64/Debug/AudioLocator.obj
 Engine/x64/Debug/Audio.obj
+.vs/2D_GameEngine/v15/ipch/b74b6903f2b3d065.ipch
+.vs/2D_GameEngine/v15/ipch/a83910c630955645.ipch
+.vs/2D_GameEngine/v15/ipch/606512d1cc3d8475.ipch
+.vs/2D_GameEngine/v15/ipch/1aeb7e4dbbfa2295.ipch
+Debug/Engine.lib
+Debug/Engine.pdb
+Debug/Game.exe
+Debug/Game.ilk
+Debug/Game.pdb
