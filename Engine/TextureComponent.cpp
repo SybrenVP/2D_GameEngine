@@ -41,3 +41,13 @@ void svp::TextureComponent::Render()
 		SDL_RenderFillRect(Renderer::GetInstance().GetSDLRenderer(), &rect);
 	}
 }
+
+int svp::TextureComponent::GetWidth()
+{
+	return m_pTexture->GetWidth();
+}
+
+int svp::TextureComponent::GetHeight()
+{
+	return m_pTexture->GetHeight();
+}

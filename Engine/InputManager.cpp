@@ -81,6 +81,15 @@ void svp::InputManager::AddPlayer(InputComponent* pPlayer)
 	m_pPlayers.push_back(pPlayer);
 }
 
+void svp::InputManager::RemovePlayer(int playerID)
+{
+	if (playerID <= int(m_pPlayers.size()) - 1)
+	{
+		m_pPlayers[playerID] = m_pPlayers[m_pPlayers.size() - 1];
+		m_pPlayers.pop_back();
+	}
+}
+
 void svp::InputManager::ProcessCButtonUp(const SDL_ControllerButtonEvent cButton, const int playerID)
 {
 	if (playerID > int(m_pPlayers.size()) - 1)
@@ -123,4 +132,14 @@ void svp::InputManager::ProcessKButtonDown(const SDL_KeyboardEvent kButton, cons
 	}
 
 	m_pPlayers.at(playerID)->ProcessCommands(kButton.keysym.scancode, false);
+}
+
+std::vector<svp::GameObject*> svp::InputManager::GetPlayersAsGameObjects()
+{
+	std::vector<GameObject*> playerGameObjs;
+	for (size_t i{}, iSize{ m_pPlayers.size() }; i < iSize; ++i)
+	{
+		playerGameObjs.push_back(m_pPlayers[i]->GetGameObject());
+	}
+	return playerGameObjs;
 }

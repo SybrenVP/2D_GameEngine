@@ -16,8 +16,10 @@ void svp::Logger::Log(LogType type, const std::string & message)
 		std::cout << "> WARNING: " << message << '\n';
 		break;
 	case LogType::Debug:
+#ifdef DEBUG
 		SetConsoleTextAttribute(hConsole, 15);
 		std::cout << "Debug info: " << message << '\n';
+#endif
 		break;
 	default:
 		Log(LogType::Error, "No acceptable logtype used in the logger.");

@@ -11,6 +11,9 @@
 #include "Audio.h"
 #include "AudioLocator.h"
 
+//own scripts
+#include "../Game/TriggerTestScript.h"
+
 svp::FPSScene::FPSScene()
 	: Scene("FPSScene")
 {
@@ -21,7 +24,6 @@ svp::FPSScene::~FPSScene()
 {
 	for (auto gameObject : m_pGameObjects)
 	{
-
 		if (gameObject)
 			delete gameObject;
 	}
@@ -68,6 +70,17 @@ void svp::FPSScene::Initialize()
 	fpsComp->SetPosition(10.f, 10.f);
 	fpsObject->AddComponent(fpsComp);
 	Add(fpsObject);
+
+	//Trigger test object
+	GameObject* const pTrigger = new GameObject();
+	auto triggerSpace = new TextureComponent(pTrigger, "TempPlayer.png");
+	pTrigger->AddComponent(triggerSpace);
+	auto triggerComp = new TriggerComponent(pTrigger, 10.f, 10.f, 0.f, 0.f, LayerFlag::Trigger);
+	pTrigger->AddComponent(triggerComp);
+	pTrigger->SetPosition(80, 80);
+	auto ownScript = new TriggerTestScript(pTrigger);
+	pTrigger->AddComponent(ownScript);
+	Add(pTrigger);
 
 	//Audio
 	ConsoleAudio* audio = new ConsoleAudio();

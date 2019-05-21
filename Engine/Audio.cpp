@@ -9,6 +9,21 @@ svp::ConsoleAudio::ConsoleAudio()
 	m_pSFX.push_back(ResourceManager::GetInstance().LoadSoundEffect("Woohoo.flac"));
 }
 
+svp::ConsoleAudio::~ConsoleAudio()
+{
+	for (auto music : m_pMusic)
+	{
+		Mix_FreeMusic(music);
+		music = nullptr;
+	}
+
+	for (auto sfx : m_pSFX)
+	{
+		Mix_FreeChunk(sfx);
+		sfx = nullptr;
+	}
+}
+
 void svp::ConsoleAudio::PlayMusic(int i, int loops)
 {
 	Logger::GetInstance().Log(Logger::LogType::Debug, "Audio nr. " + std::to_string(i) + " starts playing.");

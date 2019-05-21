@@ -113,14 +113,23 @@
     <ClInclude Include="Engine.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="InputCommands.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TriggerComponent.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonComponent.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonManagerComponent.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="StateComponent.h">
+      <Filter>Source Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -172,9 +181,6 @@
     <ClCompile Include="Logger.cpp">
       <Filter>Source Files\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="InputCommands.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="InputComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
@@ -198,6 +204,18 @@
     </ClCompile>
     <ClCompile Include="AudioLocator.cpp">
       <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="TriggerComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonManagerComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="StateComponent.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

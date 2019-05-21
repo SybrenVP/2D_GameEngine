@@ -6,3 +6,6 @@
 #include "CharacterControllerComponent.h"
 #include "GraphMovementComponent.h"
 #include "GridComponent.h"
+#include "TriggerComponent.h"
+#include "ButtonComponent.h"
+#include "ButtonManagerComponent.h"

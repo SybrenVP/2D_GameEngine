@@ -1,7 +1,6 @@
 #pragma once
 #include <memory>
-
-#include "BaseComponent.h"
+//#include "BaseComponent.h"
 #include "TransformComponent.h"
 
 
@@ -35,6 +34,28 @@ namespace svp
 					return static_cast<T*>(component);
 			}
 			return nullptr;
+		}
+
+		template <class T>
+		std::vector<T*> GetComponents()
+		{
+			const type_info& type{ typeid(T) };
+			std::vector<type> components;
+
+			for (auto* component : m_pComponents)
+			{
+				if (component && typeid(*component) == type)
+					components.push_back(static_cast<T*>(component));
+			}
+			if (components)
+				return components;
+			else
+				return nullptr;
+		}
+
+		std::vector<BaseComponent*> GetAllComponents()
+		{
+			return m_pComponents;
 		}
 
 		GameObject(const GameObject& other) = delete;

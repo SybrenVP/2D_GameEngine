@@ -12,12 +12,20 @@ svp::InputComponent::InputComponent(GameObject* const pGameObject)
 
 svp::InputComponent::~InputComponent()
 {
-	size_t size{ m_pBoundCButtons.size() };
-	for (size_t i{}; i < size; i++)
+	size_t sizeC{ m_pBoundCButtons.size() };
+	for (size_t i{}; i < sizeC; i++)
 	{
 		delete m_pBoundCButtons.at(m_pBoundCButtons.size() - 1)->m_pCommand;
 		delete m_pBoundCButtons.at(m_pBoundCButtons.size() - 1);
 		m_pBoundCButtons.pop_back();
+	}
+
+	size_t sizeK{ m_pBoundKButtons.size() };
+	for (size_t i{}; i < sizeK; i++)
+	{
+		delete m_pBoundKButtons.at(m_pBoundKButtons.size() - 1)->m_pCommand;
+		delete m_pBoundKButtons.at(m_pBoundKButtons.size() - 1);
+		m_pBoundKButtons.pop_back();
 	}
 }
 

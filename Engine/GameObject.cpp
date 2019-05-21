@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "GameObject.h"
-
+#include "BaseComponent.h"
 
 void svp::GameObject::Update()
 {
@@ -26,7 +26,7 @@ void svp::GameObject::FixedUpdate()
 
 	for (auto component : m_pComponents)
 	{
-			component->FixedUpdate();
+		component->FixedUpdate();
 	}
 }
 

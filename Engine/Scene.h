@@ -19,6 +19,7 @@ namespace svp
 		virtual void FixedUpdate();
 		
 		std::string GetName() const { return m_Name; }
+		std::vector<GameObject*> GetGameObjects() { return m_pGameObjects; }
 
 		virtual ~Scene() = default;
 		Scene(const Scene& other) = delete;

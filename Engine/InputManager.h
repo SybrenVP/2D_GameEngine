@@ -7,6 +7,7 @@
 namespace svp
 {
 	class InputComponent;
+	class GameObject;
 
 	class InputManager final : public Singleton<InputManager>
 	{
@@ -16,6 +17,8 @@ namespace svp
 		bool IsNotQuitting();
 		bool IsPressed(SDL_GameControllerButton button) const;
 		void AddPlayer(InputComponent * pPlayer);
+		void RemovePlayer(int playerID);
+		void RemoveAllPlayers() { m_pPlayers.clear(); }
 
 		void ProcessCButtonUp(const SDL_ControllerButtonEvent cButton, const int playerID = 0);
 		void ProcessCButtonDown(const SDL_ControllerButtonEvent cButton, const int playerID = 0);
@@ -23,6 +26,7 @@ namespace svp
 		void ProcessKButtonUp(const SDL_KeyboardEvent kButton, const int playerID = 0);
 		void ProcessKButtonDown(const SDL_KeyboardEvent kButton, const int playerID = 0);
 
+		std::vector<GameObject*> GetPlayersAsGameObjects();
 	private:
 		std::vector<InputComponent*> m_pPlayers;
 		std::vector<SDL_GameController*> m_pControllers;

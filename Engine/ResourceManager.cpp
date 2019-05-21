@@ -19,11 +19,11 @@ void svp::ResourceManager::Init(std::string && dataPath)
 		throw std::runtime_error(std::string("Failed to load support for png's: ") + SDL_GetError());
 	}
 
-	if ((IMG_Init(IMG_INIT_JPG) & IMG_INIT_JPG) != IMG_INIT_JPG)
-	{
-		Logger::GetInstance().Log(Logger::LogType::Error, "IMG_Init(JPG) error, in 'ResourceManager::Init()'.");
-		throw std::runtime_error(std::string("Failed to load support for jpg's: ") + SDL_GetError());
-	}
+	//if ((IMG_Init(IMG_INIT_JPG) & IMG_INIT_JPG) != IMG_INIT_JPG)
+	//{
+	//	Logger::GetInstance().Log(Logger::LogType::Error, "IMG_Init(JPG) error, in 'ResourceManager::Init()'.");
+	//	throw std::runtime_error(std::string("Failed to load support for jpg's: ") + SDL_GetError());
+	//}
 
 	if (TTF_Init() != 0)
 	{

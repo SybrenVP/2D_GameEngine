@@ -20,6 +20,7 @@
 
 //Scenes
 #include "FPSScene.h"
+#include "../Game/MenuScene.h"
 
 void svp::Engine::Initialize()
 {
@@ -43,8 +44,11 @@ void svp::Engine::Initialize()
 
 void svp::Engine::Load() const
 { //Load scenes here
-	SceneManager::GetInstance().AddScene(new FPSScene());
-	SceneManager::GetInstance().Initialize();
+	auto fpsScene = new FPSScene();
+	auto menuScene = new digdug::MenuScene();
+	SceneManager::GetInstance().AddScene(fpsScene);
+	SceneManager::GetInstance().AddScene(menuScene);
+	SceneManager::GetInstance().SwitchScene("MenuScene");
 }
 
 void svp::Engine::Run()
@@ -68,6 +72,11 @@ void svp::Engine::Run()
 		time.Initialize();
 		while (input.IsNotQuitting())
 		{
+			if (sceneManager.GoingToSwitchScene())
+			{
+				sceneManager.SetActiveScene();
+			}
+
 			time.Update();
 
 			sceneManager.Update();
@@ -79,6 +88,7 @@ void svp::Engine::Run()
 			}
 
 			renderer.Render();
+
 		}
 	}
 
@@ -89,6 +99,7 @@ void svp::Engine::Cleanup()
 {
 	Renderer::GetInstance().Destroy();
 	InputManager::GetInstance().CloseControllers();
+	AudioLocator::DeleteAudioLocator();
 
 	if (window != nullptr)
 	{

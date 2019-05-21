@@ -1,23 +1,31 @@
+#include "AudioLocator.h"
+#include "AudioLocator.h"
 #include "pch.h"
 #include "AudioLocator.h"
 
-svp::Audio* svp::AudioLocator::m_AudioService{};
+svp::Audio* svp::AudioLocator::m_pAudioService{};
 svp::NullAudio svp::AudioLocator::m_NullAudioService{};
+
+void svp::AudioLocator::DeleteAudioLocator()
+{
+	if (m_pAudioService)
+		delete m_pAudioService;
+}
 
 void svp::AudioLocator::Initialize()
 { 
-	m_AudioService = &m_NullAudioService; 
+	m_pAudioService = &m_NullAudioService; 
 }
 
 svp::Audio& svp::AudioLocator::GetAudio()
 {
-	return *m_AudioService;
+	return *m_pAudioService;
 }
 
 void svp::AudioLocator::Provide(svp::Audio* audioService)
 {
 	if (audioService == NULL)
-		m_AudioService = &m_NullAudioService;
+		m_pAudioService = &m_NullAudioService;
 	else
-		m_AudioService = audioService;
+		m_pAudioService = audioService;
 }

@@ -1,7 +1,6 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_mixer.h>
-#include <map>
 
 namespace svp
 {
@@ -28,6 +27,7 @@ namespace svp
 	{
 	public:
 		ConsoleAudio();
+		virtual ~ConsoleAudio();
 		virtual void PlayMusic(int soundID, int loops = -1);
 		virtual void PauseMusic();
 		virtual void ResumeMusic();

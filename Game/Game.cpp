@@ -4,10 +4,11 @@
 #include "pch.h"
 #include <iostream>
 #include "Engine.h"
+#include <vld.h>
 
 int main()
 {
-	auto game = new svp::Engine();
-	game->Run();
+	auto game = svp::Engine();
+	game.Run();
 }
 

@@ -14,6 +14,9 @@ namespace svp
 		virtual void Render();
 		virtual void FixedUpdate() { return; }
 
+		int GetWidth();
+		int GetHeight();
+
 	private:
 		Texture2D* m_pTexture;
 		float m_PosX;

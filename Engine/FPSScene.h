@@ -14,7 +14,7 @@ namespace svp
 		FPSScene& operator=(const FPSScene& other) = delete;
 		FPSScene& operator=(FPSScene&& other) noexcept = delete;
 
-	protected:
+	private:
 		void Initialize() override;
 		void Update() override;
 		void Render() const override;
