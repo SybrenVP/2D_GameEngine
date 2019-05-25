@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "FPSScene.h"
+#include "OnePlayer.h"
 
 #include "GameObject.h"
 #include "Components.h"
@@ -13,14 +13,16 @@
 
 //own scripts
 #include "../Game/TriggerTestScript.h"
+#include "../Game/DigDugLogic.h"
+#include "../Game/DigDugStates.h"
 
-svp::FPSScene::FPSScene()
+digdug::OnePlayer::OnePlayer()
 	: Scene("FPSScene")
 {
 }
 
 
-svp::FPSScene::~FPSScene()
+digdug::OnePlayer::~OnePlayer()
 {
 	for (auto gameObject : m_pGameObjects)
 	{
@@ -29,8 +31,9 @@ svp::FPSScene::~FPSScene()
 	}
 }
 
-void svp::FPSScene::Initialize()
+void digdug::OnePlayer::Initialize()
 {
+	using namespace svp;
 	//Add the grid
 	GameObject* pGrid = new GameObject();
 	auto gridComp = new GridComponent(pGrid, 20, 20, 40);
@@ -38,29 +41,41 @@ void svp::FPSScene::Initialize()
 	Add(pGrid);
 
 	//Make a player, Make a charcontroller, add the input, add it to the player
-	GameObject* const pPlayer = new GameObject();
-	auto charContComp = new CharacterControllerComponent(pPlayer);
+	GameObject* const pDigDug = new GameObject();
+	auto charContComp = new CharacterControllerComponent(pDigDug);
 	charContComp->SetButton(SDL_GameControllerButton::SDL_CONTROLLER_BUTTON_DPAD_LEFT, new GridMoveLeftCommand());
 	charContComp->SetButton(SDL_GameControllerButton::SDL_CONTROLLER_BUTTON_DPAD_DOWN, new GridMoveDownCommand());
 	charContComp->SetButton(SDL_GameControllerButton::SDL_CONTROLLER_BUTTON_DPAD_RIGHT, new GridMoveRightCommand());
 	charContComp->SetButton(SDL_GameControllerButton::SDL_CONTROLLER_BUTTON_DPAD_UP, new GridMoveUpCommand());
+	charContComp->SetButton(SDL_GameControllerButton::SDL_CONTROLLER_BUTTON_A, new DigDugAttackCommand(), false);
 	charContComp->SetButton(SDL_SCANCODE_A, new GridMoveLeftCommand());
 	charContComp->SetButton(SDL_SCANCODE_S, new GridMoveDownCommand());
 	charContComp->SetButton(SDL_SCANCODE_D, new GridMoveRightCommand());
 	charContComp->SetButton(SDL_SCANCODE_W, new GridMoveUpCommand());
-	pPlayer->AddComponent(charContComp);
+	pDigDug->AddComponent(charContComp);
 
 	//Make a graph movement component, add it to the player
-	auto pGraph = new GraphMovementComponent(pPlayer, pGrid->GetComponent<GridComponent>(), 1);
-	pPlayer->AddComponent(pGraph);
+	auto pGraph = new GraphMovementComponent(pDigDug, pGrid->GetComponent<GridComponent>(), 1);
+	pDigDug->AddComponent(pGraph);
 
-	//Make a texture (needs to be a sprite comp), add it to the player
-	auto pTexture = new TextureComponent(pPlayer, "TempPlayer.png");
-	pPlayer->AddComponent(pTexture);
+	//Make a sprite component, add it to the player
+	auto pSprite = new SpriteComponent(pDigDug);
+	pSprite->AddTexture("Idle", "TempIdlePlayer.png");
+	pSprite->AddTexture("Attack", "TempAttackPlayer.png");
+	pDigDug->AddComponent(pSprite);
+
+	//Add the logic
+	auto pDigDugLogic = new digdug::DigDugLogic(pDigDug);
+	pDigDug->AddComponent(pDigDugLogic);
+
+	//Add state component
+	digdug::IdleState* pIdleState = new digdug::IdleState();
+	auto pDigDugStates = new StateComponent(pDigDug, pIdleState);
+	pDigDug->AddComponent(pDigDugStates);
 
 	//Move player and Add the player
-	pPlayer->SetPosition(40, 40);
-	Add(pPlayer);
+	pDigDug->SetPosition(40, 40);
+	Add(pDigDug);
 
 	//FPS object
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 18);
@@ -73,7 +88,7 @@ void svp::FPSScene::Initialize()
 
 	//Trigger test object
 	GameObject* const pTrigger = new GameObject();
-	auto triggerSpace = new TextureComponent(pTrigger, "TempPlayer.png");
+	auto triggerSpace = new TextureComponent(pTrigger, "TempIdlePlayer.png");
 	pTrigger->AddComponent(triggerSpace);
 	auto triggerComp = new TriggerComponent(pTrigger, 10.f, 10.f, 0.f, 0.f, LayerFlag::Trigger);
 	pTrigger->AddComponent(triggerComp);
@@ -89,7 +104,7 @@ void svp::FPSScene::Initialize()
 	mainTheme.PlayMusic(0);
 }
 
-void svp::FPSScene::Update()
+void digdug::OnePlayer::Update()
 {
 	for (const auto gameObject : m_pGameObjects)
 	{
@@ -97,7 +112,7 @@ void svp::FPSScene::Update()
 	}
 }
 
-void svp::FPSScene::Render() const
+void digdug::OnePlayer::Render() const
 {
 	for (const auto gameObject : m_pGameObjects)
 		gameObject->Render();

@@ -77,8 +77,8 @@ bool svp::GameTime::IsTimerFinished(int index)
 				return false;
 		}
 	}
-	Logger::GetInstance().Log(Logger::LogType::Error, "Timer index was not found in 'IsTimerFinished()'.");
-	return false; //Log that the index was not found
+	//Logger::GetInstance().Log(Logger::LogType::Warning, "Timer index was not found in 'IsTimerFinished()'.");
+	return false;
 }
 
 void svp::GameTime::CleanupTimers()
@@ -90,6 +90,18 @@ void svp::GameTime::CleanupTimers()
 			Timer temp = m_Timers[m_Timers.size() - 1];
 			m_Timers[m_Timers.size() - 1] = m_Timers[i];
 			m_Timers[i] = temp;
+			m_Timers.pop_back();
+		}
+	}
+}
+
+void svp::GameTime::RemoveTimer(int index)
+{
+	for (size_t i{}; i < m_Timers.size(); ++i)
+	{
+		if (m_Timers[i].index == index)
+		{
+			m_Timers[i] = m_Timers[m_Timers.size() - 1];
 			m_Timers.pop_back();
 		}
 	}

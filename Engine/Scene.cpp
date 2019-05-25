@@ -26,10 +26,10 @@ void svp::Scene::Update()
 		return;
 	}
 
-	for (auto gameObject : m_pGameObjects)
-	{
-		gameObject->Update();
-	}
+	//for (auto gameObject : m_pGameObjects)
+	//{
+	//	gameObject->Update();
+	//}
 }
 
 void svp::Scene::Render() const
@@ -40,10 +40,10 @@ void svp::Scene::Render() const
 		return;
 	}
 
-	for (const auto gameObject : m_pGameObjects)
-	{
-		gameObject->Render();
-	}
+	//for (const auto gameObject : m_pGameObjects)
+	//{
+	//	gameObject->Render();
+	//}
 }
 
 void svp::Scene::FixedUpdate()
@@ -54,8 +54,8 @@ void svp::Scene::FixedUpdate()
 		return;
 	}
 
-	for (auto gameObject : m_pGameObjects)
-	{
-		gameObject->FixedUpdate();
-	}
+	//for (auto gameObject : m_pGameObjects)
+	//{
+	//	gameObject->FixedUpdate();
+	//}
 }

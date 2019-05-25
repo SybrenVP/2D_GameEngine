@@ -2,9 +2,10 @@
 #include "InputComponent.h"
 
 
-svp::InputComponent::InputComponent(GameObject* const pGameObject)
+svp::InputComponent::InputComponent(GameObject* const pGameObject, bool isKeyboard)
 	: BaseComponent(pGameObject)
 	, m_pBoundCButtons{}
+	, m_IsKeyboard{isKeyboard}
 {
 	InputManager::GetInstance().AddPlayer(this);
 }
@@ -29,7 +30,7 @@ svp::InputComponent::~InputComponent()
 	}
 }
 
-void svp::InputComponent::SetButton(SDL_GameControllerButton button, InputCommands* pCommand)
+void svp::InputComponent::SetButton(SDL_GameControllerButton button, InputCommands* pCommand, bool down)
 {
 	for (size_t i{}; i < m_pBoundCButtons.size(); i++)
 	{
@@ -43,14 +44,14 @@ void svp::InputComponent::SetButton(SDL_GameControllerButton button, InputComman
 			Logger::GetInstance().Log(Logger::LogType::Warning, "This button is already in use for another command; In 'InputComponent::SetButton()'.");
 		}
 	}
-	m_pBoundCButtons.push_back(new CButton(button, pCommand, true));
+	m_pBoundCButtons.push_back(new CButton(button, pCommand, true, down));
 }
 
-void svp::InputComponent::SetButton(SDL_Scancode key, InputCommands* pCommand)
+void svp::InputComponent::SetButton(SDL_Scancode key, InputCommands* pCommand, bool down)
 {
 	for (size_t i{}; i < m_pBoundKButtons.size(); i++)
 	{
-		if (m_pBoundKButtons.at(i)->m_Button == key && m_pBoundCButtons.at(i)->m_pCommand == pCommand)
+		if (m_pBoundKButtons.at(i)->m_Button == key && m_pBoundKButtons.at(i)->m_pCommand == pCommand)
 		{
 			Logger::GetInstance().Log(Logger::LogType::Warning, "This button and command are already in the list; In 'InputComponent::SetButton()'");
 			return;
@@ -60,7 +61,7 @@ void svp::InputComponent::SetButton(SDL_Scancode key, InputCommands* pCommand)
 			Logger::GetInstance().Log(Logger::LogType::Warning, "This button is already in use for another command; In 'InputComponent::SetButton()'.");
 		}
 	}
-	m_pBoundKButtons.push_back(new KButton(key, pCommand, true));
+	m_pBoundKButtons.push_back(new KButton(key, pCommand, true, down));
 }
 
 void svp::InputComponent::ProcessCommands(SDL_GameControllerButton cButton, bool isUp)
@@ -70,10 +71,8 @@ void svp::InputComponent::ProcessCommands(SDL_GameControllerButton cButton, bool
 		if (button->m_Button == cButton)
 		{
 			button->bIsUp = isUp;
-			if(!isUp)
+			if(isUp == !button->bUseOnDown)
 				button->m_pCommand->Execute(m_pGameObject);
-			
-			break;
 		}
 	}
 
@@ -86,10 +85,9 @@ void svp::InputComponent::ProcessCommands(SDL_Scancode kButton, bool isUp)
 		if (button->m_Button == kButton)
 		{
 			button->bIsUp = isUp;
-			if (!isUp)
-				button->m_pCommand->Execute(m_pGameObject);
-
-			break;
+			if(isUp)
+				if (isUp == !button->bUseOnDown)
+					button->m_pCommand->Execute(m_pGameObject);
 		}
 	}
 }
@@ -98,7 +96,13 @@ void svp::InputComponent::Update()
 {
 	for (auto button : m_pBoundCButtons)
 	{
-		if (!button->bIsUp)
+		if (button->bIsUp == !button->bUseOnDown && button->bWasUp != button->bIsUp)
+			button->m_pCommand->Execute(m_pGameObject);
+	}
+
+	for (auto button : m_pBoundKButtons)
+	{
+		if ((button->bIsUp == !button->bUseOnDown) && (button->bWasUp != button->bIsUp))
 			button->m_pCommand->Execute(m_pGameObject);
 	}
 }

@@ -32,6 +32,7 @@ namespace svp
 		bool IsLagging() const { return m_Lag > m_MsPerUpdate; }
 
 		void CleanupTimers();
+		void RemoveTimer(int index);
 	private:
 		double m_DeltaTime{};
 		double m_Lag{};

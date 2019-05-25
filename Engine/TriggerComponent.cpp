@@ -10,12 +10,14 @@ svp::TriggerComponent::TriggerComponent(GameObject * const pGameObject, float wi
 	, m_Height{ height }
 	, m_XOffset{ xOffset }
 	, m_YOffset{ yOffset }
-	, m_IsInTrigger{false}
 	, m_OnLayer{ onLayer }
 	, m_pCharacterGameObjects{ nullptr }
 {
 	m_pActiveScene = SceneManager::GetInstance().GetActiveScene();
 	m_pCharacterGameObjects = InputManager::GetInstance().GetPlayersAsGameObjects();
+
+	for (auto go : m_pCharacterGameObjects)
+		m_pIsInTrigger[go] = false;
 }
 
 void svp::TriggerComponent::Update()
@@ -26,11 +28,11 @@ void svp::TriggerComponent::Update()
 		if(go)
 			inside = InsideTrigger(go->GetTransform());
 		
-		if (inside && !m_IsInTrigger)
+		if (inside && !m_pIsInTrigger[go])
 		{
 			TriggerEnter(go->GetComponent<TriggerComponent>());
 		}
-		else if (!inside && m_IsInTrigger)
+		else if (!inside && m_pIsInTrigger[go])
 		{
 			TriggerLeave(go->GetComponent<TriggerComponent>());
 		}
@@ -54,7 +56,7 @@ void svp::TriggerComponent::TriggerEnter(TriggerComponent* pOther)
 		{
 			Logger::GetInstance().Log(Logger::LogType::Debug, "Trigger Enter in TriggerComponent");
 			comp->OnTriggerEnter(pOther);
-			m_IsInTrigger = true;
+			m_pIsInTrigger[pOther->GetGameObject()] = true;
 		}
 	}
 }
@@ -68,7 +70,7 @@ void svp::TriggerComponent::TriggerLeave(TriggerComponent * pOther)
 		{
 			Logger::GetInstance().Log(Logger::LogType::Debug, "Trigger Leave in TriggerComponent");
 			comp->OnTriggerLeave(pOther);
-			m_IsInTrigger = false;
+			m_pIsInTrigger[pOther->GetGameObject()] = false;
 		}
 	}
 }

@@ -39,6 +39,19 @@ namespace svp
 		void Execute(GameObject* pGameObject, const int value = 0) override;
 	};
 
+	//Ingame logic (attacking, idle...)
+	class DigDugAttackCommand final : public InputCommands
+	{
+		void Execute(GameObject* pGameObject, const int value = 0) override;
+	private:
+		bool m_Attacking{};
+	};
+
+	class DigDugAttackStopCommand final : public InputCommands
+	{
+		void Execute(GameObject* pGameObject, const int value = 0) override;
+	};
+
 	//Menuing
 	class ButtonRightCommand final : public InputCommands
 	{

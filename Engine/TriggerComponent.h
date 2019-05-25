@@ -1,6 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
-
+#include <map>
 namespace svp
 {
 	class Scene;
@@ -23,7 +23,7 @@ namespace svp
 		float m_Height;
 		float m_XOffset;
 		float m_YOffset;
-		bool m_IsInTrigger;
+		std::map<GameObject*, bool> m_pIsInTrigger;
 
 		LayerFlag m_OnLayer;
 

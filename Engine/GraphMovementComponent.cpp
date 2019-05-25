@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include <SDL.h>
 #include "GameTime.h"
+#include "CharacterControllerComponent.h"
 
 svp::GraphMovementComponent::GraphMovementComponent(GameObject* const pGameObject, GridComponent* const pGrid, const int cornerCut)
 	: BaseComponent(pGameObject)
@@ -12,6 +13,7 @@ svp::GraphMovementComponent::GraphMovementComponent(GameObject* const pGameObjec
 	, m_Width{pGrid->GetWidth()}
 	, m_Height{pGrid->GetHeight()}
 	, m_IsUsingGrid{true}
+	, m_IsMoving{true}
 	, m_Dir{Direction::NONE}
 	, m_CornerCutoff{ cornerCut }
 {
@@ -58,11 +60,14 @@ void svp::GraphMovementComponent::Update()
 		}
 	}
 
-	if (m_IsUsingGrid)
+	if (m_pGameObject->GetComponent<CharacterControllerComponent>())
 	{
 		Transform trans = m_pGameObject->GetTransform();
 		m_pGrid->GiveObjectPos(trans);
+	}
 
+	if (m_IsMoving)
+	{
 		if (m_Dir == Direction::UP)
 			MoveUp();
 		else if (m_Dir == Direction::DOWN)
@@ -100,12 +105,15 @@ void svp::GraphMovementComponent::MoveUp()
 	float speed{ 50.f };
 	float deltaTime{float(GameTime::GetInstance().GetDeltaTime())};
 
-	if (m_DistToClosestX <= m_CornerCutoff)
+	if (m_DistToClosestX <= m_CornerCutoff || !m_IsUsingGrid)
 	{
-		if (m_PreviousDir == Direction::LEFT)
-			xDisplacement -= m_DistToClosestX;
-		else if (m_PreviousDir == Direction::RIGHT)
-			xDisplacement += m_DistToClosestX;
+		if (m_IsUsingGrid)
+		{
+			if (m_PreviousDir == Direction::LEFT)
+				xDisplacement -= m_DistToClosestX;
+			else if (m_PreviousDir == Direction::RIGHT)
+				xDisplacement += m_DistToClosestX;
+		}
 
 		m_PreviousDir = Direction::UP;
 		
@@ -130,12 +138,15 @@ void svp::GraphMovementComponent::MoveDown()
 	float speed{ 50.f };
 	float deltaTime{ float(GameTime::GetInstance().GetDeltaTime()) };
 
-	if (m_DistToClosestX <= m_CornerCutoff)
+	if (m_DistToClosestX <= m_CornerCutoff || !m_IsUsingGrid)
 	{
-		if (m_PreviousDir == Direction::LEFT)
-			xDisplacement -= m_DistToClosestX;
-		else if (m_PreviousDir == Direction::RIGHT)
-			xDisplacement += m_DistToClosestX;
+		if (m_IsUsingGrid)
+		{
+			if (m_PreviousDir == Direction::LEFT)
+				xDisplacement -= m_DistToClosestX;
+			else if (m_PreviousDir == Direction::RIGHT)
+				xDisplacement += m_DistToClosestX;
+		}
 
 		m_PreviousDir = Direction::DOWN;
 
@@ -160,12 +171,15 @@ void svp::GraphMovementComponent::MoveLeft()
 	float speed{ 50.f };
 	float deltaTime{ float(GameTime::GetInstance().GetDeltaTime()) };
 
-	if (m_DistToClosestY <= m_CornerCutoff)
+	if (m_DistToClosestY <= m_CornerCutoff || !m_IsUsingGrid)
 	{
-		if (m_PreviousDir == Direction::UP)
-			yDisplacement -= m_DistToClosestY;
-		else if (m_PreviousDir == Direction::DOWN)
-			yDisplacement += m_DistToClosestY;
+		if (m_IsUsingGrid)
+		{
+			if (m_PreviousDir == Direction::UP)
+				yDisplacement -= m_DistToClosestY;
+			else if (m_PreviousDir == Direction::DOWN)
+				yDisplacement += m_DistToClosestY;
+		}
 
 		m_PreviousDir = Direction::LEFT;
 
@@ -190,13 +204,16 @@ void svp::GraphMovementComponent::MoveRight()
 	float speed{ 50.f };
 	float deltaTime{ float(GameTime::GetInstance().GetDeltaTime()) };
 
-	if (m_DistToClosestY <= m_CornerCutoff)
+	if (m_DistToClosestY <= m_CornerCutoff || !m_IsUsingGrid)
 	{
-		if (m_PreviousDir == Direction::UP)
-			yDisplacement -= m_DistToClosestY;
-		else if (m_PreviousDir == Direction::DOWN)
-			yDisplacement += m_DistToClosestY;
-		
+		if (m_IsUsingGrid)
+		{
+			if (m_PreviousDir == Direction::UP)
+				yDisplacement -= m_DistToClosestY;
+			else if (m_PreviousDir == Direction::DOWN)
+				yDisplacement += m_DistToClosestY;
+		}
+
 		m_PreviousDir = Direction::RIGHT;
 
 		xDisplacement = speed * deltaTime;

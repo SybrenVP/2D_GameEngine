@@ -60,11 +60,11 @@ bool svp::InputManager::IsNotQuitting()
 		}
 		else if (e.type == SDL_KEYUP)
 		{
-			ProcessKButtonUp(e.key, 0);
+			ProcessKButtonUp(e.key, int(m_pPlayers.size() - 1));
 		}
 		else if (e.type == SDL_KEYDOWN)
 		{
-			ProcessKButtonDown(e.key, 0);
+			ProcessKButtonDown(e.key, int(m_pPlayers.size() - 1));
 		}
 	}
 	
@@ -79,6 +79,22 @@ bool svp::InputManager::IsPressed(SDL_GameControllerButton) const
 void svp::InputManager::AddPlayer(InputComponent* pPlayer)
 {
 	m_pPlayers.push_back(pPlayer);
+	
+	for (size_t i{}, iSize{ m_pPlayers.size() }; i < iSize; ++i)
+	{
+		if (m_pPlayers[i]->GetIsKeyBoard())
+		{
+			if (i == iSize - 1)
+				return;
+			else
+			{
+				auto tempPlayer = m_pPlayers[i];
+				m_pPlayers[i] = m_pPlayers[iSize - 1];
+				m_pPlayers[iSize - 1] = tempPlayer;
+				return;
+			}
+		}
+	}
 }
 
 void svp::InputManager::RemovePlayer(int playerID)
@@ -87,6 +103,20 @@ void svp::InputManager::RemovePlayer(int playerID)
 	{
 		m_pPlayers[playerID] = m_pPlayers[m_pPlayers.size() - 1];
 		m_pPlayers.pop_back();
+	}
+}
+
+void svp::InputManager::SetKeyboardPlayer()
+{
+	if (m_pControllers.size() < m_pPlayers.size())
+	{
+		for (size_t i{}, iSize{ m_pPlayers.size() }; i < iSize; ++i)
+		{
+			if (m_pPlayers[i]->GetIsKeyBoard())
+				m_KeyboardPlayerID = i;
+			else
+				m_ControllerPlayerID = i;
+		}
 	}
 }
 

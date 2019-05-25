@@ -54,7 +54,6 @@ svp::GridComponent::~GridComponent()
 
 void svp::GridComponent::Update()
 {
-	UpdateFreeLines();
 }
 
 void svp::GridComponent::Render()
@@ -91,6 +90,7 @@ void svp::GridComponent::FixedUpdate()
 void svp::GridComponent::GiveObjectPos(Transform pObjectTransform)
 {
 	m_pObjectOnGridPosition = pObjectTransform;
+	UpdateFreeLines();
 }
 
 void svp::GridComponent::UpdateFreeLines()
@@ -111,4 +111,15 @@ void svp::GridComponent::UpdateFreeLines()
 			m_pPoints.pop_back();
 		}
 	}
+}
+
+bool svp::GridComponent::CheckIfPointIsFreePoint(Transform * point)
+{
+	for (size_t i{}; i < m_pFreePoints.size(); ++i)
+	{
+		if (point->GetPosition().x - m_pFreePoints[i]->GetPosition().x < 0.001 &&
+			point->GetPosition().y - m_pFreePoints[i]->GetPosition().y < 0.001)
+			return true;
+	}
+	return false;
 }

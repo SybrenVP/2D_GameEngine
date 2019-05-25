@@ -16,10 +16,28 @@ namespace svp
 
 		int GetWidth();
 		int GetHeight();
+		void SetOffset(float posX, float posY) 
+		{
+			m_OffsetX = posX;
+			m_OffsetY = posY;
+		}
+		void AddToOffset(float posX, float posY)
+		{
+			m_OffsetX = -(m_pTexture->GetWidth() * 0.5f) + posX;
+			m_OffsetY = -(m_pTexture->GetHeight() * 0.5f) + posY;
+		}
+		void SetAngle(double angle) { m_Angle = angle; }
 
 	private:
 		Texture2D* m_pTexture;
+		float m_OffsetX;
+		float m_OffsetY;
+
+		float m_GameObjPosX;
+		float m_GameObjPosY;
+
 		float m_PosX;
 		float m_PosY;
+		double m_Angle;
 	};
 }

@@ -19,7 +19,8 @@
 #include "AudioLocator.h"
 
 //Scenes
-#include "FPSScene.h"
+#include "../Game/OnePlayer.h"
+#include "../Game/TwoPlayerScene.h"
 #include "../Game/MenuScene.h"
 
 void svp::Engine::Initialize()
@@ -44,11 +45,13 @@ void svp::Engine::Initialize()
 
 void svp::Engine::Load() const
 { //Load scenes here
-	auto fpsScene = new FPSScene();
+	auto OnePlayerScene = new digdug::OnePlayer();
+	auto TwoPlayerScene = new digdug::TwoPlayerScene();
 	auto menuScene = new digdug::MenuScene();
-	SceneManager::GetInstance().AddScene(fpsScene);
+	SceneManager::GetInstance().AddScene(OnePlayerScene);
+	SceneManager::GetInstance().AddScene(TwoPlayerScene);
 	SceneManager::GetInstance().AddScene(menuScene);
-	SceneManager::GetInstance().SwitchScene("MenuScene");
+	SceneManager::GetInstance().SwitchScene("TwoPlayer");
 }
 
 void svp::Engine::Run()
@@ -65,7 +68,6 @@ void svp::Engine::Run()
 		Renderer& renderer = Renderer::GetInstance();
 		GameTime& time = GameTime::GetInstance(); //GameTime singleton
 		SceneManager& sceneManager = SceneManager::GetInstance(); //SceneManager singleton
-		
 		//Init achievements
 		Achievements::GetInstance().Init();
 
@@ -75,6 +77,7 @@ void svp::Engine::Run()
 			if (sceneManager.GoingToSwitchScene())
 			{
 				sceneManager.SetActiveScene();
+				input.SetKeyboardPlayer();
 			}
 
 			time.Update();

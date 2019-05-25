@@ -10,9 +10,12 @@ void svp::GameObject::Update()
 		return;
 	}
 
-	for (auto component : m_pComponents)
+	if (m_Active)
 	{
-		component->Update();
+		for (auto component : m_pComponents)
+		{
+			component->Update();
+		}
 	}
 }
 
@@ -24,9 +27,12 @@ void svp::GameObject::FixedUpdate()
 		return;
 	}
 
-	for (auto component : m_pComponents)
+	if (m_Active)
 	{
-		component->FixedUpdate();
+		for (auto component : m_pComponents)
+		{
+			component->FixedUpdate();
+		}
 	}
 }
 
@@ -38,9 +44,12 @@ void svp::GameObject::Render() const
 		return;
 	}
 
-	for (auto component : m_pComponents)
+	if (m_Active)
 	{
-		component->Render();
+		for (auto component : m_pComponents)
+		{
+			component->Render();
+		}
 	}
 }
 

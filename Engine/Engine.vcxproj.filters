@@ -131,6 +131,12 @@
     <ClInclude Include="StateComponent.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Source Files\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteComponent.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -215,6 +221,12 @@
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="StateComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>Source Files\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>

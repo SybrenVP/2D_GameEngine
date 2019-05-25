@@ -25,7 +25,15 @@ namespace svp
 
 		void SetIsUsingGrid(bool usingGrid) { m_IsUsingGrid = usingGrid; }
 		bool GetIsUsingGrid() { return m_IsUsingGrid; }
+		void SetMovement(bool val) { m_IsMoving = val; }
 		void SetDirection(Direction dir);
+		Direction GetDirection() 
+		{ 
+			if (m_Dir != Direction::NONE)
+				return m_Dir;
+			else
+				return m_PreviousDir;
+		}
 
 	private:
 		std::vector<Transform*> m_pPoints;
@@ -49,6 +57,7 @@ namespace svp
 		int m_ClosestY;
 
 		bool m_IsUsingGrid;
+		bool m_IsMoving;
 
 		void MoveUp();
 		void MoveDown();

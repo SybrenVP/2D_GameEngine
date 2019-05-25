@@ -7,7 +7,7 @@
 void svp::Renderer::Initialize(SDL_Window * window)
 {
 	m_pRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC); //always 60fps
-
+	
 	if (m_pRenderer == nullptr)
 	{
 		Logger::GetInstance().Log(Logger::LogType::Error, "SDL_CreateRenderer error, in 'Renderer::Initialize()'.");
@@ -33,13 +33,15 @@ void svp::Renderer::Destroy()
 	}
 }
 
-void svp::Renderer::RenderTexture(SDL_Texture* texture, float x, float y) const
+void svp::Renderer::RenderTexture(SDL_Texture* texture, float x, float y, double angle) const
 {
 	SDL_Rect destRect{};
 	destRect.x = static_cast<int>(x);
 	destRect.y = static_cast<int>(y);
 	SDL_QueryTexture(texture, nullptr, nullptr, &destRect.w, &destRect.h);
-	SDL_RenderCopy(GetSDLRenderer(), texture, nullptr, &destRect);
+
+	//Render to screen
+	SDL_RenderCopyEx(GetSDLRenderer(), texture, NULL, &destRect, angle, NULL, SDL_RendererFlip());
 }
 
 void svp::Renderer::RenderTexture(const Texture2D & texture, float x, float y, float width, float height) const

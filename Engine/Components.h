@@ -9,3 +9,5 @@
 #include "TriggerComponent.h"
 #include "ButtonComponent.h"
 #include "ButtonManagerComponent.h"
+#include "SpriteComponent.h"
+#include "StateComponent.h"

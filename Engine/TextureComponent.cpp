@@ -4,16 +4,21 @@
 #include "ResourceManager.h"
 
 
-svp::TextureComponent::TextureComponent(GameObject* const gameObject, const std::string& file, float posX, float posY)
+svp::TextureComponent::TextureComponent(GameObject* const gameObject, const std::string& file, float offsetX, float offsetY)
 	: BaseComponent(gameObject)
 	, m_pTexture{ nullptr }
-	, m_PosX{ posX }
-	, m_PosY{ posY }
+	, m_OffsetX{ offsetX }
+	, m_OffsetY{ offsetY }
 {
 	m_pTexture = ResourceManager::GetInstance().LoadTexture(file);
 	if (!m_pTexture)
 		Logger::GetInstance().Log(Logger::LogType::Error, "Failed to load texture; In 'TextureComponent::TextureComponent'.");
 	
+	m_OffsetX = -(m_pTexture->GetWidth() * 0.5f) + offsetX;
+	m_OffsetY = -(m_pTexture->GetHeight() * 0.5f) + offsetY;
+
+	m_GameObjPosX = gameObject->GetTransform().GetPosition().x;
+	m_GameObjPosY = gameObject->GetTransform().GetPosition().y;
 }
 
 
@@ -25,14 +30,14 @@ svp::TextureComponent::~TextureComponent()
 
 void svp::TextureComponent::Update()
 {
-	m_PosX = m_pGameObject->GetTransform().GetPosition().x;
-	m_PosY = m_pGameObject->GetTransform().GetPosition().y;
+	m_GameObjPosX = m_pGameObject->GetTransform().GetPosition().x;
+	m_GameObjPosY = m_pGameObject->GetTransform().GetPosition().y;
 }
 
 void svp::TextureComponent::Render()
 {
 	if (m_pTexture)
-		Renderer::GetInstance().RenderTexture(m_pTexture->GetSDLTexture(), m_PosX, m_PosY);
+		Renderer::GetInstance().RenderTexture(m_pTexture->GetSDLTexture(), m_GameObjPosX + m_OffsetX, m_GameObjPosY + m_OffsetY, m_Angle);
 	else
 	{
 		SDL_SetRenderDrawColor(Renderer::GetInstance().GetSDLRenderer(), 0, 255, 0, 255); //Green means texture failed to load

@@ -2,6 +2,7 @@
 #include "InputCommands.h"
 #include "GraphMovementComponent.h"
 #include "ButtonManagerComponent.h"
+#include "../Game/DigDugLogic.h"
 
 void svp::GridMoveDownCommand::Execute(GameObject* pGameObject, const int)
 {
@@ -46,4 +47,14 @@ void svp::ButtonDownCommand::Execute(GameObject * pGameObject, const int )
 void svp::ButtonSubmit::Execute(GameObject* pGameObject, const int)
 {
 	pGameObject->GetComponent<ButtonManagerComponent>()->Submit();
+}
+
+void svp::DigDugAttackCommand::Execute(GameObject * pGameObject, const int)
+{
+	pGameObject->GetComponent<digdug::DigDugLogic>()->SetAttacking(true);
+}
+
+void svp::DigDugAttackStopCommand::Execute(GameObject * pGameObject, const int)
+{
+	pGameObject->GetComponent<digdug::DigDugLogic>()->SetAttacking(false);
 }

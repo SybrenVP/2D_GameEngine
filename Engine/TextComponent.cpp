@@ -55,7 +55,7 @@ void svp::TextComponent::SetText(const std::string & text)
 void svp::TextComponent::Render()
 {
 	if (m_pTexture)
-		Renderer::GetInstance().RenderTexture(m_pTexture, m_Transform.GetPosition().x, m_Transform.GetPosition().y);
+		Renderer::GetInstance().RenderTexture(m_pTexture, m_Transform.GetPosition().x, m_Transform.GetPosition().y, 0.f);
 	else
 		m_NeedsUpdate = true;
 }

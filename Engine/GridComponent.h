@@ -19,10 +19,12 @@ namespace svp
 		int GetWidth() { return m_Width; }
 		int GetHeight() { return m_Height; }
 		std::vector<Transform*> GetPoints() { return m_pPoints; }
+		std::vector<Transform*> GetFreePoints() { return m_pFreePoints; }
 		inline std::vector<int> GetXLines() { return m_XLines; }
 		inline std::vector<int> GetYLines() { return m_YLines; }
 		void GiveObjectPos(Transform pObjectTransform);
 		void UpdateFreeLines();
+		bool CheckIfPointIsFreePoint(Transform* point);
 
 	private:
 		std::vector<Transform*> m_pPoints;

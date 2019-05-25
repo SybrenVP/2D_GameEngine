@@ -10,12 +10,12 @@ namespace digdug
 		virtual void Execute(svp::GameObject* pGameObject) = 0;
 	};
 
-	class OnePlayer final : public ButtonCommands
+	class OnePlayerCommand final : public ButtonCommands
 	{
 		void Execute(svp::GameObject* pGameObject) override;
 	};
 
-	class TwoPlayer final : public ButtonCommands
+	class TwoPlayerCommand final : public ButtonCommands
 	{
 		void Execute(svp::GameObject* pGameObject) override;
 	};

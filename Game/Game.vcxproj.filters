@@ -12,11 +12,14 @@
     <Filter Include="Source Files\Scenes">
       <UniqueIdentifier>{9f55df52-43c7-49c7-9801-e3617cdb802e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Scripts">
-      <UniqueIdentifier>{a9b3eb6b-c622-4241-ace8-43acf4cbff6b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Commands">
       <UniqueIdentifier>{ccf3f267-c2ef-4553-a2b9-22fdd416f2ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States">
+      <UniqueIdentifier>{4a8cb334-c910-4aa6-a8a8-4a31003e618d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Logic">
+      <UniqueIdentifier>{a9b3eb6b-c622-4241-ace8-43acf4cbff6b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -26,11 +29,8 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine\FPSScene.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="TriggerTestScript.cpp">
-      <Filter>Source Files\Scripts</Filter>
+      <Filter>Source Files\Logic</Filter>
     </ClCompile>
     <ClCompile Include="..\Engine\InputCommands.cpp">
       <Filter>Source Files\Commands</Filter>
@@ -41,16 +41,37 @@
     <ClCompile Include="ButtonCommands.cpp">
       <Filter>Source Files\Commands</Filter>
     </ClCompile>
+    <ClCompile Include="DigDugStates.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="DigDugLogic.cpp">
+      <Filter>Source Files\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="OnePlayer.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="TwoPlayerScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="PookaLogic.cpp">
+      <Filter>Source Files\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="TexFillGrid.cpp">
+      <Filter>Source Files\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="RockLogic.cpp">
+      <Filter>Source Files\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="DigDugHealthLogic.cpp">
+      <Filter>Source Files\Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Engine\FPSScene.h">
-      <Filter>Source Files\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="TriggerTestScript.h">
-      <Filter>Source Files\Scripts</Filter>
+      <Filter>Source Files\Logic</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\InputCommands.h">
       <Filter>Source Files\Commands</Filter>
@@ -63,6 +84,30 @@
     </ClInclude>
     <ClInclude Include="ButtonCommands.h">
       <Filter>Source Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="DigDugStates.h">
+      <Filter>Source Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="DigDugLogic.h">
+      <Filter>Source Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="OnePlayer.h">
+      <Filter>Source Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="TwoPlayerScene.h">
+      <Filter>Source Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="PookaLogic.h">
+      <Filter>Source Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="TexFillGrid.h">
+      <Filter>Source Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="RockLogic.h">
+      <Filter>Source Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="DigDugHealthLogic.h">
+      <Filter>Source Files\Logic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

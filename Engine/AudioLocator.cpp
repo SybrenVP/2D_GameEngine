@@ -19,7 +19,10 @@ void svp::AudioLocator::Initialize()
 
 svp::Audio& svp::AudioLocator::GetAudio()
 {
-	return *m_pAudioService;
+	if (m_pAudioService)
+		return *m_pAudioService;
+	else
+		return m_NullAudioService;
 }
 
 void svp::AudioLocator::Provide(svp::Audio* audioService)

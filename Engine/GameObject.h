@@ -57,6 +57,7 @@ namespace svp
 		{
 			return m_pComponents;
 		}
+		void SetActive(bool active) { m_Active = active; }
 
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
@@ -66,5 +67,6 @@ namespace svp
 	private:
 		Transform m_Transform{ };
 		std::vector<BaseComponent*> m_pComponents;
+		bool m_Active = true;
 	};
 }

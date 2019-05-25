@@ -208,6 +208,8 @@ xcopy "$(SolutionDir)lib\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Command>
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SpriteComponent.h" />
+    <ClInclude Include="State.h" />
     <ClInclude Include="StateComponent.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="targetver.h" />
@@ -245,6 +247,8 @@ xcopy "$(SolutionDir)lib\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Command>
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SpriteComponent.cpp" />
+    <ClCompile Include="State.cpp" />
     <ClCompile Include="StateComponent.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="TextComponent.cpp" />

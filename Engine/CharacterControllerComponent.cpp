@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "CharacterControllerComponent.h"
 
-svp::CharacterControllerComponent::CharacterControllerComponent(GameObject* const pGameObject)
+svp::CharacterControllerComponent::CharacterControllerComponent(GameObject* const pGameObject, bool isKeyboard)
 	: BaseComponent(pGameObject)
 {
-	m_pInputComp = new InputComponent(pGameObject);
+	m_pInputComp = new InputComponent(pGameObject, isKeyboard);
 }
 
 
@@ -22,12 +22,12 @@ void svp::CharacterControllerComponent::Render()
 {
 }
 
-void svp::CharacterControllerComponent::SetButton(SDL_GameControllerButton button, InputCommands * pCommand)
+void svp::CharacterControllerComponent::SetButton(SDL_GameControllerButton button, InputCommands * pCommand, bool down)
 {
-	m_pInputComp->SetButton(button, pCommand);
+	m_pInputComp->SetButton(button, pCommand, down);
 }
 
-void svp::CharacterControllerComponent::SetButton(SDL_Scancode key, InputCommands* pCommand)
+void svp::CharacterControllerComponent::SetButton(SDL_Scancode key, InputCommands* pCommand, bool down)
 {
-	m_pInputComp->SetButton(key, pCommand);
+	m_pInputComp->SetButton(key, pCommand, down);
 }
