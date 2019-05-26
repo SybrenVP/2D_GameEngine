@@ -12,6 +12,7 @@ svp::TriggerComponent::TriggerComponent(GameObject * const pGameObject, float wi
 	, m_YOffset{ yOffset }
 	, m_OnLayer{ onLayer }
 	, m_pCharacterGameObjects{ nullptr }
+	, m_Active{true}
 {
 	m_pActiveScene = SceneManager::GetInstance().GetActiveScene();
 	m_pCharacterGameObjects = InputManager::GetInstance().GetPlayersAsGameObjects();
@@ -22,25 +23,48 @@ svp::TriggerComponent::TriggerComponent(GameObject * const pGameObject, float wi
 
 void svp::TriggerComponent::Update()
 {
-	for (auto go : m_pCharacterGameObjects)
+	for (auto go : SceneManager::GetInstance().GetActiveScene()->GetGameObjects())
 	{
-		bool inside{false};
-		if(go)
-			inside = InsideTrigger(go->GetTransform());
-		
-		if (inside && !m_pIsInTrigger[go])
+		auto triggers = go->GetComponents<TriggerComponent>();
+		for(auto trigger : triggers)
 		{
-			TriggerEnter(go->GetComponent<TriggerComponent>());
+			bool inside{ false };
+			if (go)
+				inside = InsideTrigger(go->GetTransform());
+			if (trigger->m_Active)
+			{
+				if (inside && !m_pIsInTrigger[go])
+				{
+					TriggerEnter(trigger);
+				}
+			}
+			if (!inside && m_pIsInTrigger[go])
+			{
+				TriggerLeave(trigger);
+			}
 		}
-		else if (!inside && m_pIsInTrigger[go])
-		{
-			TriggerLeave(go->GetComponent<TriggerComponent>());
-		}
+	}
+
+	if(!m_Active)
+	{
+		m_XOffset = 0.0f;
+		m_YOffset = 0.0f;
 	}
 }
 
 void svp::TriggerComponent::Render()
 {
+#ifdef DEBUG
+	if (m_Active)
+	{
+		SDL_Rect rect{};
+		rect.x = int(m_pGameObject->GetTransform().GetPosition().x - m_Width / 2.f + m_XOffset);
+		rect.y = int(m_pGameObject->GetTransform().GetPosition().y - m_Height / 2.f + m_YOffset);
+		rect.w = int(m_Width);
+		rect.h = int(m_Height);
+		SDL_RenderDrawRect(Renderer::GetInstance().GetSDLRenderer(), &rect);
+	}
+#endif
 }
 
 void svp::TriggerComponent::FixedUpdate()
@@ -79,10 +103,12 @@ bool svp::TriggerComponent::InsideTrigger(Transform pOther)
 {
 	float otherXPos{ pOther.GetPosition().x };
 	float otherYPos{ pOther.GetPosition().y };
-	float xLeft{this->GetGameObject()->GetTransform().GetPosition().x - m_Width / 2.f};
-	float xRight{this->GetGameObject()->GetTransform().GetPosition().x + m_Width / 2.f};
-	float yBot{this->GetGameObject()->GetTransform().GetPosition().y + m_Height / 2.f};
-	float yTop{this->GetGameObject()->GetTransform().GetPosition().y - m_Height / 2.f};
+
+	float xLeft{m_pGameObject->GetTransform().GetPosition().x - m_Width / 2.f};
+	float xRight{m_pGameObject->GetTransform().GetPosition().x + m_Width / 2.f};
+
+	float yBot{m_pGameObject->GetTransform().GetPosition().y + m_Height / 2.f};
+	float yTop{m_pGameObject->GetTransform().GetPosition().y - m_Height / 2.f};
 
 	if (otherXPos > xLeft + m_XOffset && otherXPos < xRight + m_XOffset && otherYPos < yBot + m_YOffset && otherYPos > yTop + m_YOffset)
 		return true;

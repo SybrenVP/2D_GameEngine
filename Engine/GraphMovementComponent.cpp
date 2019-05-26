@@ -68,13 +68,13 @@ void svp::GraphMovementComponent::Update()
 
 	if (m_IsMoving)
 	{
-		if (m_Dir == Direction::UP)
+		if (m_Dir == Direction::UP && m_pGameObject->GetTransform().GetPosition().y > 40)
 			MoveUp();
-		else if (m_Dir == Direction::DOWN)
+		else if (m_Dir == Direction::DOWN && m_pGameObject->GetTransform().GetPosition().y < 600)
 			MoveDown();
-		else if (m_Dir == Direction::LEFT)
+		else if (m_Dir == Direction::LEFT && m_pGameObject->GetTransform().GetPosition().x > 40)
 			MoveLeft();
-		else if (m_Dir == Direction::RIGHT)
+		else if (m_Dir == Direction::RIGHT && m_pGameObject->GetTransform().GetPosition().x < 800)
 			MoveRight();
 	}
 

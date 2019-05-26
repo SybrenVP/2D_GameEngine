@@ -197,6 +197,7 @@ xcopy "$(SolutionDir)lib\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Command>
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="GraphMovementComponent.h" />
     <ClInclude Include="GridComponent.h" />
+    <ClInclude Include="GridLoader.h" />
     <ClInclude Include="GridObserver.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="InputManager.h" />
@@ -232,6 +233,7 @@ xcopy "$(SolutionDir)lib\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Command>
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="GraphMovementComponent.cpp" />
     <ClCompile Include="GridComponent.cpp" />
+    <ClCompile Include="GridLoader.cpp" />
     <ClCompile Include="GridObserver.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />

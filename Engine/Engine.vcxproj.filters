@@ -137,6 +137,9 @@
     <ClInclude Include="SpriteComponent.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="GridLoader.h">
+      <Filter>Source Files\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -228,6 +231,9 @@
     </ClCompile>
     <ClCompile Include="SpriteComponent.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GridLoader.cpp">
+      <Filter>Source Files\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

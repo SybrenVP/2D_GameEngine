@@ -27,7 +27,7 @@ namespace svp
 			m_OffsetY = -(m_pTexture->GetHeight() * 0.5f) + posY;
 		}
 		void SetAngle(double angle) { m_Angle = angle; }
-
+		void SetUniformScale(float val) { m_Scale = val; }
 	private:
 		Texture2D* m_pTexture;
 		float m_OffsetX;
@@ -39,5 +39,6 @@ namespace svp
 		float m_PosX;
 		float m_PosY;
 		double m_Angle;
+		float m_Scale;
 	};
 }

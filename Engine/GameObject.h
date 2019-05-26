@@ -40,17 +40,14 @@ namespace svp
 		std::vector<T*> GetComponents()
 		{
 			const type_info& type{ typeid(T) };
-			std::vector<type> components;
+			std::vector<T*> components;
 
 			for (auto* component : m_pComponents)
 			{
 				if (component && typeid(*component) == type)
 					components.push_back(static_cast<T*>(component));
 			}
-			if (components)
-				return components;
-			else
-				return nullptr;
+			return components;
 		}
 
 		std::vector<BaseComponent*> GetAllComponents()
@@ -58,6 +55,7 @@ namespace svp
 			return m_pComponents;
 		}
 		void SetActive(bool active) { m_Active = active; }
+		bool GetActive() { return m_Active; }
 
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;

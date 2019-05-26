@@ -3,5 +3,6 @@
 enum class LayerFlag
 {
 	Normal,
-	Trigger
+	Trigger,
+	DigDugAttack
 };

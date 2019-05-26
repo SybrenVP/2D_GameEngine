@@ -9,6 +9,7 @@ svp::TextureComponent::TextureComponent(GameObject* const gameObject, const std:
 	, m_pTexture{ nullptr }
 	, m_OffsetX{ offsetX }
 	, m_OffsetY{ offsetY }
+	, m_Scale{1.f}
 {
 	m_pTexture = ResourceManager::GetInstance().LoadTexture(file);
 	if (!m_pTexture)
@@ -37,7 +38,7 @@ void svp::TextureComponent::Update()
 void svp::TextureComponent::Render()
 {
 	if (m_pTexture)
-		Renderer::GetInstance().RenderTexture(m_pTexture->GetSDLTexture(), m_GameObjPosX + m_OffsetX, m_GameObjPosY + m_OffsetY, m_Angle);
+		Renderer::GetInstance().RenderTexture(m_pTexture->GetSDLTexture(), m_GameObjPosX + m_OffsetX, m_GameObjPosY + m_OffsetY, m_Angle, m_Scale);
 	else
 	{
 		SDL_SetRenderDrawColor(Renderer::GetInstance().GetSDLRenderer(), 0, 255, 0, 255); //Green means texture failed to load

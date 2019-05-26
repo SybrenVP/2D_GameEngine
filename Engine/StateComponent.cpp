@@ -4,17 +4,24 @@
 #include "SpriteComponent.h"
 #include "../Game/DigDugStates.h"
 #include "../Game/DigDugLogic.h"
+#include "../Game/FygarState.h"
+#include "../Game/FygarLogic.h"
 
 svp::StateComponent::StateComponent(GameObject* const pGameObject, State* pCurrentState)
 	: BaseComponent(pGameObject)
 	, m_pCurrentState(pCurrentState)
 {
 	m_pCurrentState->SetSprite(m_pGameObject->GetComponent<SpriteComponent>());
-	if (reinterpret_cast<digdug::DigDugState*>(pCurrentState))
-	{
-		digdug::DigDugState* pDigDugState = reinterpret_cast<digdug::DigDugState*>(pCurrentState);
-		pDigDugState->SetDigDug(m_pGameObject->GetComponent<digdug::DigDugLogic>());
-	}
+	//if (reinterpret_cast<digdug::DigDugState*>(pCurrentState))
+	//{
+	//	digdug::DigDugState* pDigDugState = reinterpret_cast<digdug::DigDugState*>(pCurrentState);
+	//	pDigDugState->SetDigDug(m_pGameObject->GetComponent<digdug::DigDugLogic>());
+	//}
+	//else if (reinterpret_cast<digdug::FygarState*>(pCurrentState))
+	//{
+	//	digdug::FygarState* pFygarState = reinterpret_cast<digdug::FygarState*>(pCurrentState);
+	//	pFygarState->SetFygar(m_pGameObject->GetComponent<digdug::FygarLogic>());
+	//}
 	m_pCurrentState->Enter();
 }
 

@@ -31,7 +31,7 @@ void svp::Engine::Initialize()
 		throw std::runtime_error(std::string("SDL init error: ") + SDL_GetError());
 	}
 
-	window = SDL_CreateWindow("2D_GameEngine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_OPENGL);
+	window = SDL_CreateWindow("2D_GameEngine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 840, 670, SDL_WINDOW_OPENGL);
 
 	if (window == nullptr)
 	{
@@ -51,7 +51,7 @@ void svp::Engine::Load() const
 	SceneManager::GetInstance().AddScene(OnePlayerScene);
 	SceneManager::GetInstance().AddScene(TwoPlayerScene);
 	SceneManager::GetInstance().AddScene(menuScene);
-	SceneManager::GetInstance().SwitchScene("TwoPlayer");
+	SceneManager::GetInstance().SwitchScene("MenuScene");
 }
 
 void svp::Engine::Run()

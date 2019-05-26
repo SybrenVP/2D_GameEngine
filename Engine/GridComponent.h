@@ -18,6 +18,7 @@ namespace svp
 		int GetSpace() { return m_Space; }
 		int GetWidth() { return m_Width; }
 		int GetHeight() { return m_Height; }
+		void AddAsFreePoints(std::vector<Transform*> pPoints);
 		std::vector<Transform*> GetPoints() { return m_pPoints; }
 		std::vector<Transform*> GetFreePoints() { return m_pFreePoints; }
 		inline std::vector<int> GetXLines() { return m_XLines; }

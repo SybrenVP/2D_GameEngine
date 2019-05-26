@@ -113,9 +113,9 @@ void svp::InputManager::SetKeyboardPlayer()
 		for (size_t i{}, iSize{ m_pPlayers.size() }; i < iSize; ++i)
 		{
 			if (m_pPlayers[i]->GetIsKeyBoard())
-				m_KeyboardPlayerID = i;
+				m_KeyboardPlayerID = int(i);
 			else
-				m_ControllerPlayerID = i;
+				m_ControllerPlayerID = int(i);
 		}
 	}
 }

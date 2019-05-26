@@ -17,12 +17,20 @@ namespace svp
 
 		void TriggerEnter(TriggerComponent* pOther);
 		void TriggerLeave(TriggerComponent* pOther);
-
+		void ScaleWidth(float width) { m_Width *= width; }
+		void ScaleHeigth(float height) { m_Height *= height; }
+		void SetOffset(float x, float y) 
+		{
+			m_XOffset = x;
+			m_YOffset = y;
+		}
+		void SetActive(bool val) { m_Active = val; }
 	private:
 		float m_Width;
 		float m_Height;
 		float m_XOffset;
 		float m_YOffset;
+		bool m_Active;
 		std::map<GameObject*, bool> m_pIsInTrigger;
 
 		LayerFlag m_OnLayer;

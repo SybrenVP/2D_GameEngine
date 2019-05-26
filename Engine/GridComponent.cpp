@@ -87,6 +87,24 @@ void svp::GridComponent::FixedUpdate()
 {
 }
 
+void svp::GridComponent::AddAsFreePoints(std::vector<Transform*> pPoints)
+{
+	for (size_t i{}, iSize{ pPoints.size() }; i < iSize; ++i)
+	{
+		for (size_t j{}, jSize{ m_pPoints.size() }; j < jSize; ++j)
+		{
+			if (abs(pPoints[i]->GetPosition().x - m_pPoints[j]->GetPosition().x) <= 0.001f && abs(pPoints[i]->GetPosition().y - m_pPoints[j]->GetPosition().y) <= 0.001f)
+			{
+				m_pFreePoints.push_back(m_pPoints[j]);
+				
+				m_pPoints[j] = m_pPoints[m_pPoints.size() - 1];
+				m_pPoints.pop_back();
+				break;
+			}
+		}
+	}
+}
+
 void svp::GridComponent::GiveObjectPos(Transform pObjectTransform)
 {
 	m_pObjectOnGridPosition = pObjectTransform;
@@ -117,8 +135,8 @@ bool svp::GridComponent::CheckIfPointIsFreePoint(Transform * point)
 {
 	for (size_t i{}; i < m_pFreePoints.size(); ++i)
 	{
-		if (point->GetPosition().x - m_pFreePoints[i]->GetPosition().x < 0.001 &&
-			point->GetPosition().y - m_pFreePoints[i]->GetPosition().y < 0.001)
+		if (abs(point->GetPosition().x - m_pFreePoints[i]->GetPosition().x) <= 0.001f &&
+			abs(point->GetPosition().y - m_pFreePoints[i]->GetPosition().y) <= 0.001f)
 			return true;
 	}
 	return false;

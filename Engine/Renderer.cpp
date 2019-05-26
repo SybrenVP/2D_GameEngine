@@ -33,13 +33,14 @@ void svp::Renderer::Destroy()
 	}
 }
 
-void svp::Renderer::RenderTexture(SDL_Texture* texture, float x, float y, double angle) const
+void svp::Renderer::RenderTexture(SDL_Texture* texture, float x, float y, double angle, float scale) const
 {
 	SDL_Rect destRect{};
 	destRect.x = static_cast<int>(x);
 	destRect.y = static_cast<int>(y);
 	SDL_QueryTexture(texture, nullptr, nullptr, &destRect.w, &destRect.h);
-
+	destRect.w = int(float(destRect.w) * scale);
+	destRect.h = int(float(destRect.h) * scale);
 	//Render to screen
 	SDL_RenderCopyEx(GetSDLRenderer(), texture, NULL, &destRect, angle, NULL, SDL_RendererFlip());
 }
