@@ -3,16 +3,14 @@
 
 namespace digdug
 {
-	class PookaLogic final : public svp::BaseComponent
+	class DigDugScoreLogic final : public svp::BaseComponent
 	{
 	public:
-		PookaLogic(svp::GameObject* const pGameObject);
-		virtual ~PookaLogic();
+		DigDugScoreLogic(svp::GameObject* const pGameObject);
+		virtual ~DigDugScoreLogic();
 
 		virtual void Update() override {};
 		virtual void Render() override {};
 		virtual void FixedUpdate() override {};
-	private:
-
 	};
 }

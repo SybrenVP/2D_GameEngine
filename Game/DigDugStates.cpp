@@ -129,5 +129,6 @@ bool digdug::DeadState::Update()
 
 void digdug::DeadState::Exit()
 {
+	svp::GameTime::GetInstance().RemoveTimer(2);
 }
 #pragma endregion

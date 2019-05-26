@@ -15,6 +15,7 @@ namespace digdug
 		virtual void FixedUpdate() override {};
 
 		void Damage(int damage);
+		int GetHealth() { return m_Health; }
 
 	private:
 		int m_Health;

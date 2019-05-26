@@ -35,16 +35,22 @@ void digdug::MenuScene::Initialize()
 	//Buttons
 	GameObject* const pOnePlayerButton = new GameObject();
 	GameObject* const pTwoPlayerButton = new GameObject();
-	pOnePlayerButton->SetPosition(150.f, 50.f);
-	pTwoPlayerButton->SetPosition(150.f, 250.f);
+	pOnePlayerButton->SetPosition(210.f, 50.f);
+	pTwoPlayerButton->SetPosition(210.f, 250.f);
 	TextureComponent* pNormalOne = new TextureComponent(pOnePlayerButton, "ButtonOne/Button.png");
+	pNormalOne->SetOffset(0.f, 0.f);
 	TextureComponent* pHighlightedOne = new TextureComponent(pOnePlayerButton, "ButtonOne/HighLighted.png");
+	pHighlightedOne->SetOffset(0.f, 0.f);
 	TextureComponent* pSelectedOne = new TextureComponent(pOnePlayerButton, "ButtonOne/Selected.png");
+	pSelectedOne->SetOffset(0.f, 0.f);
 	ButtonComponent* pOneButtonComp = new ButtonComponent(pOnePlayerButton, new digdug::OnePlayerCommand(),pNormalOne, pHighlightedOne, pSelectedOne);
 	
 	TextureComponent* pNormalTwo = new TextureComponent(pTwoPlayerButton, "ButtonTwo/Button.png");
+	pNormalTwo->SetOffset(0.f, 0.f);
 	TextureComponent* pHighlightedTwo = new TextureComponent(pTwoPlayerButton, "ButtonTwo/HighLighted.png");
+	pHighlightedTwo->SetOffset(0.f, 0.f);
 	TextureComponent* pSelectedTwo = new TextureComponent(pTwoPlayerButton, "ButtonTwo/Selected.png");
+	pSelectedTwo->SetOffset(0.f, 0.f);
 	ButtonComponent* pTwoButtonComp = new ButtonComponent(pTwoPlayerButton, new digdug::TwoPlayerCommand(), pNormalTwo, pHighlightedTwo, pSelectedTwo);
 	
 	pOneButtonComp->SetConnections(nullptr, nullptr, nullptr, pTwoButtonComp);

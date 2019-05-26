@@ -53,9 +53,6 @@
     <ClCompile Include="TwoPlayerScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="PookaLogic.cpp">
-      <Filter>Source Files\Logic</Filter>
-    </ClCompile>
     <ClCompile Include="TexFillGrid.cpp">
       <Filter>Source Files\Logic</Filter>
     </ClCompile>
@@ -64,6 +61,18 @@
     </ClCompile>
     <ClCompile Include="DigDugHealthLogic.cpp">
       <Filter>Source Files\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="FygarLogic.cpp">
+      <Filter>Source Files\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="FygarState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="DigDugScoreLogic.cpp">
+      <Filter>Source Files\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,9 +106,6 @@
     <ClInclude Include="TwoPlayerScene.h">
       <Filter>Source Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="PookaLogic.h">
-      <Filter>Source Files\Logic</Filter>
-    </ClInclude>
     <ClInclude Include="TexFillGrid.h">
       <Filter>Source Files\Logic</Filter>
     </ClInclude>
@@ -109,5 +115,15 @@
     <ClInclude Include="DigDugHealthLogic.h">
       <Filter>Source Files\Logic</Filter>
     </ClInclude>
+    <ClInclude Include="FygarLogic.h">
+      <Filter>Source Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="FygarState.h">
+      <Filter>Source Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="DigDugScoreLogic.h">
+      <Filter>Source Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h" />
   </ItemGroup>
 </Project>

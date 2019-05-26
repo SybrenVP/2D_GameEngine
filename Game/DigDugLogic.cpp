@@ -1,30 +1,35 @@
 #include "pch.h"
 #include "DigDugLogic.h"
 #include "GameTime.h"
-#include "GraphMovementComponent.h"
+#include "TriggerComponent.h"
+#include "FygarLogic.h"
 
-digdug::DigDugLogic::DigDugLogic(svp::GameObject* const pGameObject, svp::SpriteComponent* pAttackSprite)
+digdug::DigDugLogic::DigDugLogic(svp::GameObject* const pGameObject, svp::SpriteComponent* pAttackSprite, svp::TriggerComponent* pAttackTrigger)
 	: BaseComponent(pGameObject)
 	, m_Attacking{false}
 	, m_IsDead{false}
 	, m_DirOfAttack{0.f}
 	, m_AttackStage{0}
-	, m_pAttackSprite{pAttackSprite}
+	, m_pAttackSprite{ pAttackSprite }
+	, m_pAttackTrigger{ pAttackTrigger }
 {
-	m_BeginPos = { 80.f, 40.f };
+	m_BeginPos = { 400.f, 80.f };
 	m_pAttackSprite->SetTexture("Pump0");
+	m_Layer = LayerFlag::DigDugAttack;
 }
 
 
 digdug::DigDugLogic::~DigDugLogic()
 {
 	delete m_pAttackSprite;
+	delete m_pAttackTrigger;
 }
 
 void digdug::DigDugLogic::Update()
 {
 	if (m_IsDead)
 	{
+		m_pAttackTrigger->SetOffset(1000.f, 1000.f);
 		m_pGameObject->GetComponent<svp::GraphMovementComponent>()->SetMovement(false);
 		if (svp::GameTime::GetInstance().IsTimerFinished(2))
 		{
@@ -35,7 +40,14 @@ void digdug::DigDugLogic::Update()
 	}
 	else if(m_Attacking)
 	{
+		m_pAttackTrigger->SetActive(true);
 		Attack();
+		m_pAttackTrigger->Update();
+	}
+	else if (!m_Attacking)
+	{
+		m_pGameObject->GetComponent<svp::TriggerComponent>()->SetActive(true);
+		m_pAttackTrigger->SetActive(false);
 	}
 }
 
@@ -43,12 +55,23 @@ void digdug::DigDugLogic::Render()
 {
 	if(m_AttackStage > 0)
 		m_pAttackSprite->Render();
+	m_pAttackTrigger->Render();
 }
 
 void digdug::DigDugLogic::OnTriggerEnter(svp::TriggerComponent * pOther)
 {
-	svp::Logger::GetInstance().Log(svp::Logger::LogType::Debug, "Trigger Enter, do damage");
-	UNREFERENCED_PARAMETER(pOther);
+	if (auto pFygar = pOther->GetGameObject()->GetComponent<FygarLogic>())
+	{
+		pFygar->SetScale(1.1f);
+	}
+}
+
+void digdug::DigDugLogic::OnTriggerLeave(svp::TriggerComponent* pOther)
+{
+	if (auto pFygar = pOther->GetGameObject()->GetComponent<FygarLogic>())
+	{
+		pFygar->SetScale(1.f);
+	}
 }
 
 void digdug::DigDugLogic::Respawn()
@@ -83,11 +106,61 @@ void digdug::DigDugLogic::Attack()
 	m_pAttackSprite->SetOffset(x, y,m_DirOfAttack);
 
 	if (m_AttackStage == 1)
+	{
 		m_pAttackSprite->SetTexture("Pump1");
+	}
 	else if (m_AttackStage == 2)
+	{
 		m_pAttackSprite->SetTexture("Pump2");
+	}
 	else if (m_AttackStage == 3)
+	{
 		m_pAttackSprite->SetTexture("Pump3");
+	}
 	else
 		m_pAttackSprite->SetTexture("Pump0");
+
+	SetTriggerOffset(dir, m_AttackStage);
+}
+
+void digdug::DigDugLogic::SetTriggerOffset(svp::Direction dir, int stage)
+{
+	float x{}, y{};
+	switch (dir)
+	{
+	case svp::Direction::DOWN:
+		if (stage == 1)
+			y = 20.f;
+		else if (stage == 2)
+			y = 40.f;
+		else if (stage == 3)
+			y = 60.f;
+		break;
+	case svp::Direction::LEFT:
+		if (stage == 1)
+			x = -20.f;
+		else if (stage == 2)
+			x = -40.f;
+		else if (stage == 3)
+			x = -60.f;
+		break;
+	case svp::Direction::RIGHT:
+		if (stage == 1)
+			x = 20.f;
+		else if (stage == 2)
+			x = 40.f;
+		else if (stage == 3)
+			x = 60.f;
+		break;
+	case svp::Direction::UP:
+		if (stage == 1)
+			y = -20.f;
+		else if (stage == 2)
+			y = -40.f;
+		else if (stage == 3)
+			y = -60.f;
+		break;
+	}
+
+	m_pAttackTrigger->SetOffset(x, y);
 }
